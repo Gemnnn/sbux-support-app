@@ -1,70 +1,87 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, View } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+import React from 'react';
+
+// Helper function to format the date as "Mon, October 28"
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('en-US', {
+    weekday: 'short',   // Mon, Tue, etc.
+    month: 'long',      // October, November, etc.
+    day: 'numeric'      // 28, 29, etc.
+  });
+};
+
+// Helper function to get future dates
+const getExpireDate = (days: number) => {
+  const today = new Date();
+  const futureDate = new Date(today);
+  futureDate.setDate(today.getDate() + days);
+  return formatDate(futureDate);
+};
+
+
 export default function HomeScreen() {
+  // Get today's date formatted
+  const today = formatDate(new Date());
+
+  // Calculate dates for 2nd, 3rd, 5th, 7th, and 14th day
+  const dates = [
+    { label: '2 Days', date: getExpireDate(2) },
+    { label: '3 Days', date: getExpireDate(3) },
+    { label: '5 Days', date: getExpireDate(5) },
+    { label: '7 Days', date: getExpireDate(7) },
+    { label: '14 Days', date: getExpireDate(14) },
+  ];
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ThemedView style={styles.container}>
+      {/* Display today's date at the top */}
+      <ThemedText style={styles.title}>Today: {today}</ThemedText>
+
+      <ThemedText style={styles.subtitle}>Upcoming Dates:</ThemedText>
+
+      {/* Loop through the dates array and display each future date */}
+      {dates.map((item, index) => (
+        <View key={index} style={styles.dateContainer}>
+          <ThemedText style={styles.label}>{item.label}:</ThemedText>
+          <ThemedText style={styles.date}>{item.date}</ThemedText>
+        </View>
+      ))}
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  subtitle: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  label: {
+    fontSize: 18,
+    marginRight: 10,
+  },
+  date: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
