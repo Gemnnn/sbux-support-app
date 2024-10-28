@@ -1,11 +1,11 @@
-import { Image, StyleSheet, Platform, View } from 'react-native';
+import { Image, StyleSheet, Platform, View, TextInput } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 // Helper function to format the date as "Mon, October 28"
 const formatDate = (date: Date) => {
@@ -28,6 +28,9 @@ const getExpireDate = (days: number) => {
 export default function HomeScreen() {
   // Get today's date formatted
   const today = formatDate(new Date());
+
+  // State for search input
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Calculate dates for 2nd, 3rd, 5th, 7th, and 14th day
   const dates = [
@@ -52,6 +55,14 @@ export default function HomeScreen() {
           <ThemedText style={styles.date}>{item.date}</ThemedText>
         </View>
       ))}
+
+    <TextInput
+        style={styles.searchInput}
+        placeholder="Search for a product (e.g., 'Strawberry')"
+        value={searchQuery}
+        onChangeText={(text) => setSearchQuery(text)}
+      />
+      
     </ThemedView>
   );
 }
@@ -84,4 +95,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  searchInput: {
+    marginTop: 20,
+    width: '100%',
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    fontSize: 16,
+  }
 });
