@@ -1,4 +1,4 @@
-﻿# .gitignore for ASP.NET Core project
+# .gitignore for ASP.NET Core project
 
 # Ignore build and package outputs
 bin/
@@ -35,4 +35,8 @@ Thumbs.db
 appsettings.Local.json
 
 /server/appsettings.json
-server/.vs/server/v17/.suo
+server/obj/Debug/net8.0/server.assets.cache
+server/obj/Debug/net8.0/server.csproj.AssemblyReference.cache
+server/obj/project.assets.json
+server/obj/project.nuget.cache
+/server/obj
