@@ -1,5 +1,38 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿# .gitignore for ASP.NET Core project
+
+# Ignore build and package outputs
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.rsuser
+*.suo
+.vscode/
+.vs/
+
+# Ignore NuGet packages
+*.nupkg
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# Ignore logs and generated files
+*.log
+
+# Ignore temporary files and system files
+*.tmp
+*.temp
+*.DS_Store
+Thumbs.db
+
+# Ignore Rider (JetBrains) files
+.idea/
+*.sln.iml
+*.sln.idea/
+
+# Ignore local environment files
+appsettings.Local.json
 
 /server/appsettings.json
+server/.vs/server/v17/.suo
