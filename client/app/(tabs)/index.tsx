@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, View, TextInput } from 'react-native';
+import { Image, StyleSheet, Platform, View, TextInput, Button } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -62,7 +62,7 @@ export default function HomeScreen() {
         value={searchQuery}
         onChangeText={(text) => setSearchQuery(text)}
       />
-      
+      <Button title="Search"/>
     </ThemedView>
   );
 }
