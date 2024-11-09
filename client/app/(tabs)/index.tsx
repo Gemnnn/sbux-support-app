@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, View, TextInput, Button } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Text } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -6,6 +6,9 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
+
+import { NavigationContainer } from '@react-navigation/native';
 
 // Helper function to format the date as "Mon, October 28"
 const formatDate = (date: Date) => {
@@ -24,8 +27,34 @@ const getExpireDate = (days: number) => {
   return formatDate(futureDate);
 };
 
+// need to change to get the right one
+const fetchProductData = async (query: string) => {
+  return {
+    name: query,
+    expirationMonth: 'December',
+    expirationDate: '25',
+    expirationDay: 'Monday',
+    expirationTime: '10:00 PM',
+  };
+};
+
 
 export default function HomeScreen() {
+
+  const router = useRouter();
+
+  const handleSearch = async () => {
+    try {
+      const result = await fetchProductData(searchQuery);
+      router.push({
+        pathname: '/(tabs)/SearchResult',
+        params: { data: JSON.stringify(result) },
+      });
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+    }
+  };
+
   // Get today's date formatted
   const today = formatDate(new Date());
 
@@ -57,12 +86,13 @@ export default function HomeScreen() {
       ))}
 
     <TextInput
-        style={styles.searchInput}
+        style={[styles.searchInput, { color: 'white'}]}
         placeholder="Search for a product (e.g., 'Strawberry')"
+        placeholderTextColor="gray"
         value={searchQuery}
         onChangeText={(text) => setSearchQuery(text)}
       />
-      <Button title="Search"/>
+      <Button title="Search" onPress={handleSearch} />
     </ThemedView>
   );
 }
@@ -103,5 +133,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     fontSize: 16,
+    color: 'white',
+    backgroundColor: '#222',
   }
 });
