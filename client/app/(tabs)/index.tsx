@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 
 import { NavigationContainer } from '@react-navigation/native';
+import { fetchProductShelfLife } from '@/services/productService';
 
 // Helper function to format the date as "Mon, October 28"
 const formatDate = (date: Date) => {
@@ -45,15 +46,16 @@ export default function HomeScreen() {
 
   const handleSearch = async () => {
     try {
-      const result = await fetchProductData(searchQuery);
-      router.push({
-        pathname: '/(tabs)/SearchResult',
-        params: { data: JSON.stringify(result) },
-      });
-    } catch (error) {
-      console.error('Error fetching product data:', error);
+        const result = await fetchProductShelfLife(searchQuery);
+        router.push({
+            pathname: '/(tabs)/SearchResult',
+            params: { data: JSON.stringify(result) },
+        });
+    } catch (error: any) {
+        console.error('Search error:', error.message || error);
+        alert(error.message || 'Failed to fetch product data. Please try again.');
     }
-  };
+};
 
   // Get today's date formatted
   const today = formatDate(new Date());
