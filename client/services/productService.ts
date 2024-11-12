@@ -1,4 +1,5 @@
-import { BASE_URL } from '@env';
+const API_URL = process.env.API_URL;
+
 
 export interface Product {
     ProductName: string;
@@ -18,7 +19,7 @@ export interface Product {
  */
 export const fetchProductShelfLife = async (productName: string): Promise<Product> => {
     try {
-        const response = await fetch(`${BASE_URL}/api/Product/shelf-life?name=${encodeURIComponent(productName)}`);
+        const response = await fetch(`${API_URL}/api/Product/shelf-life?name=${encodeURIComponent(productName)}`);
         
         if (!response.ok) {
             if (response.status === 404) {
