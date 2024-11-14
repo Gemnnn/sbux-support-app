@@ -1,20 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { Product } from '@/services/productService';
 
 const SearchResult = () => {
   const router = useRouter();
-  const { data } = useLocalSearchParams(); // Retrieve the passed params
-  const productData = JSON.parse(data as string); // Parse the string back into an object
+  const { data } = useLocalSearchParams(); // Retrieve the serialized data passed via route
+  const [productData, setProductData] = useState<Product | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      if (!data) {
+        throw new Error('No product data provided.');
+      }
+
+      const parsedData = JSON.parse(data as string);
+      setProductData(parsedData);
+    } catch (err: any) {
+      console.error('Error parsing product data:', err.message || err);
+      setError('Invalid product data received.');
+    }
+  }, [data]);
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>{error}</Text>
+        <Button title="Back" onPress={() => router.back()} />
+      </View>
+    );
+  }
+
+  if (!productData) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading product data...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <Button title="Back" onPress={() => router.back()} />
-      <Text style={styles.item}>Product Name: {productData.name}</Text>
-      <Text style={styles.item}>Expiration Month: {productData.expirationMonth}</Text>
-      <Text style={styles.item}>Expiration Date: {productData.expirationDate}</Text>
-      <Text style={styles.item}>Expiration Day: {productData.expirationDay}</Text>
-      <Text style={styles.item}>Expiration Time: {productData.expirationTime}</Text>
+      <Text style={styles.title}>Product: {productData.productName}</Text>
+      <Text>Shelf Life: {productData.shelfLifeDays} days</Text>
+      <Text>
+        Expiration Date: {productData.expirationDate?.month}/{productData.expirationDate?.date} ({productData.expirationDate?.dayOfWeek}) at {productData.expirationDate?.time}
+      </Text>
     </View>
   );
 };
@@ -22,12 +55,19 @@ const SearchResult = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
-  item: {
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  errorText: {
+    color: 'red',
     fontSize: 16,
-    marginBottom: 8,
-    color: 'white',
+    marginBottom: 10,
   },
 });
 

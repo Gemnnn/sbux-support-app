@@ -45,17 +45,20 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const handleSearch = async () => {
+
     try {
-        const result = await fetchProductShelfLife(searchQuery);
-        router.push({
-            pathname: '/(tabs)/SearchResult',
-            params: { data: JSON.stringify(result) },
-        });
+      const result = await fetchProductShelfLife(searchQuery);
+
+      router.push({
+        pathname: '/(tabs)/SearchResult',
+        params: { data: JSON.stringify(result) }, // Ensure correct data is passed
+      });
     } catch (error: any) {
-        console.error('Search error:', error.message || error);
-        alert(error.message || 'Failed to fetch product data. Please try again.');
+      console.error('Search Error:', error.message || error);
+      alert(error.message || 'Failed to fetch product data. Please try again.');
     }
-};
+  };
+  
 
   // Get today's date formatted
   const today = formatDate(new Date());

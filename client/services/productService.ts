@@ -1,16 +1,19 @@
-const API_URL = process.env.API_URL;
+import Constants from 'expo-constants';
+
+const { BASE_URL } = Constants.expoConfig?.extra || {};
 
 
 export interface Product {
-    ProductName: string;
-    ShelfLifeDays: number;
-    ExpirationDate: {
-        Month: string;
-        Date: string;
-        DayOfWeek: string;
-        Time: string;
+    productName: string;
+    shelfLifeDays: number;
+    expirationDate: {
+      month: string;
+      date: string;
+      dayOfWeek: string;
+      time: string;
     };
-}
+  }
+  
 
 /**
  * Fetch product shelf life by product name.
@@ -18,21 +21,22 @@ export interface Product {
  * @returns {Promise<Product>} - Product data including expiration details.
  */
 export const fetchProductShelfLife = async (productName: string): Promise<Product> => {
-    try {
-        const response = await fetch(`${API_URL}/api/Product/shelf-life?name=${encodeURIComponent(productName)}`);
-        
-        if (!response.ok) {
-            if (response.status === 404) {
-                throw new Error('Product not found.');
-            } else {
-                throw new Error('Failed to fetch product data. Please try again later.');
-            }
-        }
+  if (!BASE_URL) {
+    console.error('BASE_URL is not defined in your environment.');
+    throw new Error('Environment variable BASE_URL is missing.');
+  }
 
-        return await response.json() as Product;
+  const url = `${BASE_URL}/api/Product/shelf-life?name=${encodeURIComponent(productName)}`;
 
-    } catch (error: any) {
-        console.error('Error fetching product data:', error.message || error);
-        throw new Error('Unable to retrieve product data. Please check your connection or try again later.');
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    throw error;
+  }
 };
+
