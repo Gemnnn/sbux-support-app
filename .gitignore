@@ -42,3 +42,4 @@ server/obj/project.nuget.cache
 /server/obj
 # Environment variables
 client/.env
+/server/Properties/launchSettings.json
