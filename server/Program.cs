@@ -20,6 +20,30 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
 builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<ProductService>();
 
+// Allows only specific type of requests in production for security
+builder.Services.AddCors(options =>
+{
+    if (builder.Environment.IsDevelopment())
+    {
+        options.AddPolicy("AllowAll", builder =>
+        {
+            builder.AllowAnyOrigin()  // Allow Expo Web on localhost
+                   .AllowAnyMethod()  // Allow any headers
+                   .AllowAnyHeader(); // Allow any HTTP methods (GET, POST, etc.)
+        });
+    }
+    else
+    {
+        // Apply more restrictive CORS policy for production
+        options.AddPolicy("AllowSpecific", builder =>
+        {
+            // Set up your specific CORS policy here
+        });
+    }
+});
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +52,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(builder.Environment.IsDevelopment() ? "AllowAll" : "AllowSpecific");
 
 app.UseHttpsRedirection();
 
