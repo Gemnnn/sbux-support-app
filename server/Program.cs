@@ -20,6 +20,21 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
 builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<ProductService>();
 
+// Configure Kestrel dynamically based on the environment
+builder.WebHost.ConfigureKestrel(options =>
+{
+    if (builder.Environment.IsDevelopment())
+    {
+        // In development, bind to all network interfaces for easier testing
+        options.ListenAnyIP(5223);
+    }
+    else
+    {
+        // In production, bind only to localhost for security
+        options.ListenLocalhost(5223);
+    }
+});
+
 // Allows only specific type of requests in production for security
 builder.Services.AddCors(options =>
 {
