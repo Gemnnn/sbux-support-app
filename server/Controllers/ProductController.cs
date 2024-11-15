@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using server.Services;
 
 namespace server.Controllers
@@ -15,7 +16,7 @@ namespace server.Controllers
         }
 
         [HttpGet("shelf-life")]
-        public IActionResult GetProductShelfLife([FromQuery] string name, [FromQuery] string timeZone)
+        public async Task<IActionResult> GetProductShelfLifeAsync([FromQuery] string name, [FromQuery] string timeZone)
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(timeZone))
             {
@@ -34,7 +35,7 @@ namespace server.Controllers
 
             try
             {
-                var response = _productService.GetProductShelfLife(name, timeZone);
+                var response = await _productService.GetProductShelfLifeAsync(name, timeZone);
                 return Ok(response);
             }
             catch (TimeZoneNotFoundException)

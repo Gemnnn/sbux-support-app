@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using server.Data;
 using server.Models;
@@ -14,11 +14,10 @@ namespace server.Repositories
             _context = context;
         }
 
-        public Product GetProductByName(string name)
+        public async Task<Product> GetProductByNameAsync(string name)
         {
-            // Use ToLower() to perform a case-insensitive comparison
-            return _context.Products
-                .FirstOrDefault(p => p.ProductName.ToLower() == name.ToLower());
+            return await _context.Products
+                .FirstOrDefaultAsync(p => p.ProductName.ToLower() == name.ToLower());
         }
     }
 }

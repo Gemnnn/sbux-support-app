@@ -1,9 +1,10 @@
-﻿using server.Models;
+﻿using System.Threading.Tasks;
+using server.Models;
 
 namespace server.Repositories
 {
     public interface IProductRepository
     {
-        Product GetProductByName(string name);
+        Task<Product> GetProductByNameAsync(string name);
     }
 }

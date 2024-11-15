@@ -13,10 +13,10 @@ namespace server.Services
             _productRepository = productRepository;
         }
 
-        public object GetProductShelfLife(string name, string timeZone)
+        public async Task<object> GetProductShelfLifeAsync(string name, string timeZone)
         {
             // Fetch product from database
-            var product = _productRepository.GetProductByName(name);
+            var product = await _productRepository.GetProductByNameAsync(name);
             if (product == null)
             {
                 throw new KeyNotFoundException($"Product '{name}' not found.");

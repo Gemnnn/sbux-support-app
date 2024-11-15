@@ -1,7 +1,9 @@
-﻿namespace server.Services
+﻿using System.Threading.Tasks;
+
+namespace server.Services
 {
     public interface IProductService
     {
-        object GetProductShelfLife(string name, string timeZone);
+        Task<object> GetProductShelfLifeAsync(string name, string timeZone);
     }
 }
