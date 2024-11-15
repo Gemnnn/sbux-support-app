@@ -26,7 +26,14 @@ export const fetchProductShelfLife = async (productName: string): Promise<Produc
     throw new Error('Environment variable BASE_URL is missing.');
   }
 
-  const url = `${BASE_URL}/api/Product/shelf-life?name=${encodeURIComponent(productName)}`;
+
+    // Get the user's GMT offset dynamically
+    const timeZoneOffset = new Date().getTimezoneOffset(); // Offset in minutes
+    const timeZone = `GMT${timeZoneOffset > 0 ? '-' : '+'}${Math.abs(timeZoneOffset / 60)}`; // Convert to GMT format (e.g., GMT-5)
+
+    const url = `${BASE_URL}/api/Product/shelf-life?name=${encodeURIComponent(productName)}&timeZone=${encodeURIComponent(timeZone)}`;
+
+    console.log(url); // Log the URL for debugging
 
   try {
     const response = await fetch(url);
