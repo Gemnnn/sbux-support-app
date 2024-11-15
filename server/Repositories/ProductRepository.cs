@@ -1,22 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using server.Data;
 using server.Models;
-using System.Linq;
 
-public class ProductRepository
+namespace server.Repositories
 {
-    private readonly ProductDbContext _context;
-
-    public ProductRepository(ProductDbContext context)
+    public class ProductRepository : IProductRepository
     {
-        _context = context;
-    }
+        private readonly ProductDbContext _context;
 
-    public Product GetProductByName(string productName)
-    {
-        // Find the product by name (using Contains to allow partial matches)
-        return _context.Products.FirstOrDefault(p => p.ProductName.Contains(productName));
+        public ProductRepository(ProductDbContext context)
+        {
+            _context = context;
+        }
+
+        public Product GetProductByName(string name)
+        {
+            // Use ToLower() to perform a case-insensitive comparison
+            return _context.Products
+                .FirstOrDefault(p => p.ProductName.ToLower() == name.ToLower());
+        }
     }
 }
-

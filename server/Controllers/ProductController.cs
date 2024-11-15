@@ -7,43 +7,44 @@ namespace server.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
 
-        public ProductController(ProductService productService)
+        public ProductController(IProductService productService)
         {
             _productService = productService;
         }
 
         [HttpGet("shelf-life")]
-        public IActionResult GetProductShelfLife([FromQuery] string name)
+        public IActionResult GetProductShelfLife([FromQuery] string name, [FromQuery] string timeZone)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(timeZone))
             {
-                return BadRequest("Product name is required.");
-            }
-
-            var (product, expirationDateUtc) = _productService.GetProductWithExpiration(name);
-
-            if (product == null)
-            {
-                return NotFound("Product not found.");
-            }
-
-            // Prepare each component of the expiration date
-            var response = new
-            {
-                ProductName = product.ProductName,
-                ShelfLifeDays = product.ShelfLifeDays,
-                ExpirationDate = new
+                return BadRequest(new
                 {
-                    Month = expirationDateUtc.ToString("MM"),
-                    Date = expirationDateUtc.ToString("dd"),
-                    DayOfWeek = expirationDateUtc.ToString("dddd"),
-                    Time = expirationDateUtc.ToString("HH:mm")
-                }
-            };
+                    Type = "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                    Title = "Validation errors occurred.",
+                    Status = 400,
+                    Errors = new
+                    {
+                        name = string.IsNullOrEmpty(name) ? new[] { "The name field is required." } : null,
+                        timeZone = string.IsNullOrEmpty(timeZone) ? new[] { "The timeZone field is required." } : null
+                    }
+                });
+            }
 
-            return Ok(response);
+            try
+            {
+                var response = _productService.GetProductShelfLife(name, timeZone);
+                return Ok(response);
+            }
+            catch (TimeZoneNotFoundException)
+            {
+                return BadRequest(new { Error = $"Invalid time zone: {timeZone}" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Error = $"Unexpected error occurred: {ex.Message}" });
+            }
         }
     }
 }
