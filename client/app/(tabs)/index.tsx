@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, Button, Text } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Text, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -76,7 +76,10 @@ export default function HomeScreen() {
   ];
 
   return (
-    <ThemedView style={styles.container}>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
+
       {/* Display today's date at the top */}
       <ThemedText style={styles.title}>Today: {today}</ThemedText>
 
@@ -97,8 +100,11 @@ export default function HomeScreen() {
         value={searchQuery}
         onChangeText={(text) => setSearchQuery(text)}
       />
-      <Button title="Search" onPress={handleSearch} />
-    </ThemedView>
+      {/* <Button title="Search" onPress={handleSearch} /> */}
+      <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+        <Text style={styles.searchButtonText}>Search</Text>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -108,6 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: 'gray'
   },
   title: {
     fontSize: 24,
@@ -140,5 +147,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     backgroundColor: '#222',
-  }
+  },
+  searchButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#555',
+    borderRadius: 8,
+    alignItems: 'center',
+},
+searchButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+}
 });
