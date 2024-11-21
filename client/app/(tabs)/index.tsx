@@ -1,15 +1,28 @@
-import { StyleSheet, View, TextInput, Button, Text, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  FlatList,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
+import { Product } from '@/services/productService';
+
 
 import { NavigationContainer } from '@react-navigation/native';
 import { fetchProductShelfLife } from '@/services/productService';
+import Constants from "expo-constants";
+
 
 // Helper function to format the date as "Mon, October 28"
 const formatDate = (date: Date) => {
@@ -28,21 +41,30 @@ const getExpireDate = (days: number) => {
   return formatDate(futureDate);
 };
 
-// need to change to get the right one
-const fetchProductData = async (query: string) => {
-  return {
-    name: query,
-    expirationMonth: 'December',
-    expirationDate: '25',
-    expirationDay: 'Monday',
-    expirationTime: '10:00 PM',
-  };
+// API call to fetch products matching the query
+const fetchProductData = async (query: string): Promise<Product[]> => {
+  try {
+    const response = await fetch(
+      `${Constants.expoConfig?.extra?.BASE_URL}/api/Product/search?query=${query}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch products");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
 
 
 export default function HomeScreen() {
 
   const router = useRouter();
+  //imported Product interface
+  const [searchQuery, setSearchQuery] = useState<string>(""); // Type explicitly as string
+  const [searchResults, setSearchResults] = useState<Product[]>([]); // Type explicitly as Product[]
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSearch = async () => {
 
@@ -58,13 +80,30 @@ export default function HomeScreen() {
       alert(error.message || 'Failed to fetch product data. Please try again.');
     }
   };
+
+
+  // Fetch search results in real-time as the user types
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (searchQuery.trim() === "") {
+        setSearchResults([]);
+        return;
+      }
+      setLoading(true);
+      const results = await fetchProductData(searchQuery);
+      setSearchResults(results);
+      setLoading(false);
+    };
+    fetchResults();
+  }, [searchQuery]);
+
+  
   
 
   // Get today's date formatted
   const today = formatDate(new Date());
 
   // State for search input
-  const [searchQuery, setSearchQuery] = useState('');
 
   // Calculate dates for 2nd, 3rd, 5th, 7th, and 14th day
   const dates = [
@@ -93,17 +132,45 @@ export default function HomeScreen() {
         </View>
       ))}
 
-    <TextInput
-        style={[styles.searchInput, { color: 'white'}]}
-        placeholder="Search for a product (e.g., 'Strawberry')"
-        placeholderTextColor="gray"
-        value={searchQuery}
-        onChangeText={(text) => setSearchQuery(text)}
-      />
-      {/* <Button title="Search" onPress={handleSearch} /> */}
-      <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
-        <Text style={styles.searchButtonText}>Search</Text>
-      </TouchableOpacity>
+      <View style={styles.searchRow}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search for a product (e.g., 'Strawberry')"
+          placeholderTextColor="gray"
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
+        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+          <Text style={styles.searchButtonText}>Search</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Display search results */}
+      {loading ? (
+        <Text style={styles.loadingText}>Loading...</Text>
+      ) : searchResults.length > 0 ? (
+        <FlatList
+          data={searchResults}
+          keyExtractor={(item) => item.productName} // Use productName as the unique key
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: "/(tabs)/SearchResult",
+                  params: { data: JSON.stringify(item) },
+                })
+              }
+            >
+              <Text style={styles.resultItem}>{item.productName}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      ) : (
+        searchQuery.trim() !== "" && (
+          <Text style={styles.noResultsText}>No results found</Text>
+        )
+      )}
+
     </KeyboardAvoidingView>
   );
 }
@@ -138,26 +205,47 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   searchInput: {
-    marginTop: 20,
-    width: '100%',
+    flex: 1,
     padding: 10,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 8,
     fontSize: 16,
-    color: 'white',
-    backgroundColor: '#222',
+    color: "white",
+    backgroundColor: "#222",
+    marginRight: 10,
   },
   searchButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#555',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    backgroundColor: "#555",
     borderRadius: 8,
-    alignItems: 'center',
-},
-searchButtonText: {
-    color: '#fff',
+  },
+  searchButtonText: {
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
-}
+    fontWeight: "bold",
+  },
+searchRow: {
+  flexDirection: "row",
+  alignItems: "center",
+  marginTop: 20,
+  width: "100%",
+  },
+  loadingText: {
+    textAlign: "center",
+    color: "#666",
+    marginTop: 10,
+  },
+  noResultsText: {
+    textAlign: "center",
+    color: "#999",
+    marginTop: 10,
+  },
+  resultItem: {
+    padding: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+    color: "white",
+  },
 });
