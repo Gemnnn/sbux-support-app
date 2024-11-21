@@ -79,5 +79,10 @@ namespace server.Services
             var offset = TimeSpan.FromHours(offsetSign == '+' ? offsetHours : -offsetHours);
             return utcDateTime + offset;
         }
+
+        public async Task<IEnumerable<Product>> SearchProductsAsync(string partialName)
+        {
+            return await _productRepository.SearchProductsAsync(partialName); 
+        }
     }
 }

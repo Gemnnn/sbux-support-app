@@ -19,5 +19,12 @@ namespace server.Repositories
             return await _context.Products
                 .FirstOrDefaultAsync(p => p.ProductName.ToLower() == name.ToLower());
         }
+
+        public async Task<IEnumerable<Product>> SearchProductsAsync(string partialName)
+        {
+            return await _context.Products
+                                 .Where(p => p.ProductName.StartsWith(partialName))
+                                 .ToListAsync();
+        }
     }
 }

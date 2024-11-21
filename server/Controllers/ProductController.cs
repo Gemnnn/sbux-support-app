@@ -47,5 +47,18 @@ namespace server.Controllers
                 return StatusCode(500, new { Error = $"Unexpected error occurred: {ex.Message}" });
             }
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchProducts([FromQuery] string query)
+        {
+            var products = await _productService.SearchProductsAsync(query);
+
+            if (products == null || !products.Any())
+            {
+                return NotFound(new { Message = "No results found" });
+            }
+
+            return Ok(products);
+        }
     }
 }
