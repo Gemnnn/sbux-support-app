@@ -3,32 +3,62 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-// Color mapping by day of the week
+// Day colors
 const dayColors: Record<string, string> = {
-  Monday: '#3498db',    // Blue
-  Tuesday: '#f1c40f',   // Yellow
-  Wednesday: '#e74c3c', // Red
-  Thursday: '#8e7e73',  // Brown
-  Friday: '#2ecc71',    // Green
-  Saturday: '#e67e22',  // Orange
-  Sunday: '#000000',    // Black
+  Monday: '#3498db',
+  Tuesday: '#f1c40f',
+  Wednesday: '#e74c3c',
+  Thursday: '#8e7e73',
+  Friday: '#2ecc71',
+  Saturday: '#e67e22',
+  Sunday: '#000000',
 };
 
 const DateSticker = ({ product }: { product: any }) => {
   const { productName, expirationDate } = product;
+
+  if (!expirationDate || !expirationDate.time) {
+    console.error('Invalid expirationDate:', expirationDate);
+    return <Text style={{ color: 'red' }}>Invalid expiration date</Text>;
+  }
+
   const { dayOfWeek, month, date, time } = expirationDate;
   const backgroundColor = dayColors[dayOfWeek] || '#ccc';
+  
+  // Parse time
+  const timeParts = time.split(':'); // Expect "HH:mm" format
+  const hour = parseInt(timeParts[0], 10); // Extract hour
+  const minute = parseInt(timeParts[1], 10); // Extract minute
 
-  // Time parsing
-  const timeParts = time.split(':');
-  const hour = parseInt(timeParts[0], 10);
-  const minute = parseInt(timeParts[1], 10);
-  const isPM = hour >= 12;
-  const displayHour = hour % 12 === 0 ? 12 : hour % 12; // 12 hour format conversion
+  // Correct AM/PM calculation
+  let isPM = false;
+  let displayHour = hour;
+
+  if (hour === 0) {
+    // 0:00 (midnight) -> 12:00 AM
+    displayHour = 12;
+    isPM = false;
+  } else if (hour === 12) {
+    // 12:00 -> Always PM
+    displayHour = 12;
+    isPM = time.includes("PM"); // Only set to PM if explicitly marked as PM
+  } else if (hour > 12) {
+    // Convert 24-hour to 12-hour format for PM times
+    displayHour = hour % 12;
+    isPM = true;
+  } else {
+    // AM times from 1:00 to 11:59
+    isPM = false;
+  }
+
+  const formattedMinute = minute < 10 ? `0${minute}` : minute;
+
+  // Debugging output
+  console.log(`Original Time: ${time}, Parsed: ${hour}:${minute}, Display: ${displayHour}:${formattedMinute} ${isPM ? 'PM' : 'AM'}`);
 
   return (
     <View style={styles.stickerContainer}>
-      {/* Left content area */}
+      {/* Left color area */}
       <View style={[styles.leftColorSection, { backgroundColor }]}>
         <Text style={styles.dayText}>{dayOfWeek.toUpperCase()}</Text>
         <Text style={styles.translations}>
@@ -50,25 +80,22 @@ const DateSticker = ({ product }: { product: any }) => {
 
       {/* Right content area */}
       <View style={styles.rightContentSection}>
-        {/* Discard Date */}
         <Text style={styles.label}>DISCARD DATE:</Text>
         <Text style={styles.value}>
           {productName} - {month} {date}
         </Text>
 
-        {/* Divider Line */}
         <View style={styles.separator} />
 
-        {/* Discard Time */}
         <Text style={styles.label}>DISCARD TIME:</Text>
         <View style={styles.timeRow}>
           <Text style={styles.value}>
-            {`${displayHour}:${minute < 10 ? '0' : ''}${minute} ${isPM ? 'PM' : 'AM'}`}
+            {`${displayHour}:${formattedMinute} ${isPM ? 'PM' : 'AM'}`}
           </Text>
           <View style={styles.checkboxes}>
-            <View style={[styles.checkbox, isPM ? null : styles.checked]} />
+            <View style={[styles.checkbox, !isPM && styles.checked]} />
             <Text style={styles.checkboxLabel}>AM</Text>
-            <View style={[styles.checkbox, isPM ? styles.checked : null]} />
+            <View style={[styles.checkbox, isPM && styles.checked]} />
             <Text style={styles.checkboxLabel}>PM</Text>
           </View>
         </View>
@@ -99,13 +126,11 @@ const SearchResult = () => {
 
   return (
     <View style={styles.container}>
-      {/* Back Button */}
       <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
         <Ionicons name="arrow-back" size={24} color="black" />
         <Text style={styles.backButtonText}>BACK</Text>
       </TouchableOpacity>
 
-      {/* Sticker */}
       <DateSticker product={productData} />
     </View>
   );
@@ -114,9 +139,9 @@ const SearchResult = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
     justifyContent: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   backButton: {
     position: 'absolute',
@@ -137,27 +162,23 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderRadius: 10,
     width: '90%',
-    alignSelf: 'center',
     marginTop: 80,
     overflow: 'hidden',
   },
   leftColorSection: {
     width: '30%',
-    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
   },
   dayText: {
     fontSize: 18,
-    fontWeight: 'bold',
     color: 'white',
-    textAlign: 'center',
+    fontWeight: 'bold',
   },
   translations: {
     fontSize: 10,
     color: 'white',
-    textAlign: 'center',
-    marginTop: 5,
   },
   rightContentSection: {
     width: '70%',
@@ -170,7 +191,6 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 5,
   },
   separator: {
     height: 1,
@@ -180,7 +200,6 @@ const styles = StyleSheet.create({
   timeRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
   checkboxes: {
     flexDirection: 'row',
@@ -197,7 +216,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   checkboxLabel: {
-    marginRight: 10,
     fontSize: 14,
   },
 });
