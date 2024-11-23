@@ -66,20 +66,22 @@ export default function HomeScreen() {
   const [searchResults, setSearchResults] = useState<Product[]>([]); // Type explicitly as Product[]
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSearch = async () => {
-
+  const handleSearch = async (productName?: string) => {
     try {
-      const result = await fetchProductShelfLife(searchQuery);
-
+      const nameToSearch = productName || searchQuery; // Use the provided productName or fall back to searchQuery
+      const product = await fetchProductShelfLife(nameToSearch);
+  
+      // Navigate with the full product object
       router.push({
         pathname: '/(tabs)/SearchResult',
-        params: { data: JSON.stringify(result) }, // Ensure correct data is passed
+        params: { data: JSON.stringify(product) },
       });
     } catch (error: any) {
       console.error('Search Error:', error.message || error);
       alert(error.message || 'Failed to fetch product data. Please try again.');
     }
   };
+  
 
 
   // Fetch search results in real-time as the user types
@@ -140,7 +142,7 @@ export default function HomeScreen() {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+        <TouchableOpacity style={styles.searchButton} onPress={() => handleSearch()}>
           <Text style={styles.searchButtonText}>Search</Text>
         </TouchableOpacity>
       </View>
@@ -151,15 +153,10 @@ export default function HomeScreen() {
       ) : searchResults.length > 0 ? (
         <FlatList
           data={searchResults}
-          keyExtractor={(item) => item.productName} // Use productName as the unique key
+          keyExtractor={(item) => item.productName}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() =>
-                router.push({
-                  pathname: "/(tabs)/SearchResult",
-                  params: { data: JSON.stringify(item) },
-                })
-              }
+              onPress={() => handleSearch(item.productName)} // Pass productName to handleSearch
             >
               <Text style={styles.resultItem}>{item.productName}</Text>
             </TouchableOpacity>
