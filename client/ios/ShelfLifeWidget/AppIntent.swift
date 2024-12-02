@@ -2,7 +2,7 @@
 //  AppIntent.swift
 //  ShelfLifeWidget
 //
-//  Created by Sol on 11/24/24.
+//  Created by Branden on 11/24/24.
 //
 
 import WidgetKit
