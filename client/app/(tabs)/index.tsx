@@ -134,6 +134,11 @@ export default function HomeScreen() {
               value={searchQuery}
               onChangeText={(text) => setSearchQuery(text)}
             />
+            {searchQuery.trim() !== "" && (
+              <TouchableOpacity onPress={() => setSearchQuery("")}>
+                <Ionicons name="close-circle" size={20} color="#888" />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 
