@@ -94,7 +94,12 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const showKeyboard = () => setIsKeyboardVisible(true);
-    const hideKeyboard = () => setIsKeyboardVisible(false);
+    const hideKeyboard = () => {
+      setIsKeyboardVisible(false);
+      setIsSearching(false);
+      setSearchQuery(""); 
+      setSearchResults([]); 
+    };
 
     const showSubscription = Keyboard.addListener("keyboardDidShow", showKeyboard);
     const hideSubscription = Keyboard.addListener("keyboardDidHide", hideKeyboard);
@@ -128,7 +133,16 @@ export default function HomeScreen() {
   ];
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss(); // Close the keyboard
+        if (isSearching) {
+          setIsSearching(false); // Reset search state
+          setSearchQuery(""); // Clear the search query
+        }
+      }}
+      accessible={false} // Prevent accessibility issues
+    >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
@@ -170,8 +184,8 @@ export default function HomeScreen() {
                   value={searchQuery}
                   onChangeText={(text) => setSearchQuery(text)}
                   onFocus={() => {
-                    setIsSearching(true);
-                    setIsKeyboardVisible(true); // Ensure instant result display
+                    setIsSearching(true); // Activate search mode
+                    setIsKeyboardVisible(true);
                   }}
                 />
                 {searchQuery.trim() !== "" && (
@@ -197,7 +211,7 @@ export default function HomeScreen() {
               ) : searchResults.length > 0 ? (
                 <FlatList
                   data={searchResults}
-                  keyboardShouldPersistTaps="handled" // Allow touch while keyboard is active
+                  keyboardShouldPersistTaps="always" // Ensure taps on results work
                   keyExtractor={(item) => item.productName}
                   contentContainerStyle={styles.resultContainer}
                   renderItem={({ item }) => (
@@ -217,7 +231,9 @@ export default function HomeScreen() {
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
+
   );
+  
 }
 
 const styles = StyleSheet.create({
@@ -299,11 +315,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start', 
     justifyContent: 'flex-start', 
     paddingHorizontal: 12, 
+    minHeight: 300,
   },
   resultItem: {
-    width: '100%', 
-    padding: 16, 
-    marginVertical: 8, 
+    width: '100%',
+    padding: 8,
+    marginVertical: 4,
     borderRadius: 16,
     backgroundColor: "#D4E9E2",
   },
