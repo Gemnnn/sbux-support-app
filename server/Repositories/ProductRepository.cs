@@ -23,7 +23,7 @@ namespace server.Repositories
         public async Task<IEnumerable<Product>> SearchProductsAsync(string partialName)
         {
             return await _context.Products
-                                 .Where(p => p.ProductName.StartsWith(partialName))
+                                 .Where(p => p.ProductName.Contains(partialName))
                                  .ToListAsync();
         }
     }
