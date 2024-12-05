@@ -94,12 +94,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const showKeyboard = () => setIsKeyboardVisible(true);
-    const hideKeyboard = () => {
-      setIsKeyboardVisible(false);
-      setIsSearching(false);
-      setSearchQuery(""); 
-      setSearchResults([]); 
-    };
+    const hideKeyboard = () => setIsKeyboardVisible(false);
 
     const showSubscription = Keyboard.addListener("keyboardDidShow", showKeyboard);
     const hideSubscription = Keyboard.addListener("keyboardDidHide", hideKeyboard);
@@ -199,41 +194,41 @@ export default function HomeScreen() {
 
           {/* Search Results Section */}
           {isSearching && (
-            <Animated.View
-              style={[
-                styles.card,
-                styles.resultContainer,
-                { transform: [{ translateY: animation }] },
-              ]}
-            >
-              {loading ? (
-                <Text style={styles.loadingText}>Loading...</Text>
-              ) : searchResults.length > 0 ? (
-                <FlatList
-                  data={searchResults}
-                  keyboardShouldPersistTaps="always" // Ensure taps on results work
-                  keyExtractor={(item) => item.productName}
-                  contentContainerStyle={styles.resultContainer}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      style={styles.resultItem}
-                      onPress={() => handleSearchResultPress(item.productName)}
-                    >
-                      <Text style={styles.resultText}>{item.productName}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
-              ) : (
-                <Text style={styles.noResultsText}>No results found</Text>
-              )}
-            </Animated.View>
+            <View style={{ flex: 1 }} onStartShouldSetResponder={() => true}>
+              <Animated.View
+                style={[
+                  styles.card,
+                  styles.resultContainer,
+                  { transform: [{ translateY: animation }] },
+                ]}
+              >
+                {loading ? (
+                  <Text style={styles.loadingText}>Loading...</Text>
+                ) : searchResults.length > 0 ? (
+                  <FlatList
+                    data={searchResults}
+                    keyboardShouldPersistTaps="handled" // Ensure taps on results work
+                    keyExtractor={(item) => item.productName}
+                    contentContainerStyle={styles.resultContainer}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity
+                        style={styles.resultItem}
+                        onPress={() => handleSearchResultPress(item.productName)}
+                      >
+                        <Text style={styles.resultText}>{item.productName}</Text>
+                      </TouchableOpacity>
+                    )}
+                  />
+                ) : (
+                  <Text style={styles.noResultsText}>No results found</Text>
+                )}
+              </Animated.View>
+            </View>
           )}
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
-
   );
-  
 }
 
 const styles = StyleSheet.create({
@@ -311,14 +306,14 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     flex: 1,
-    width: '100%', 
-    alignItems: 'flex-start', 
-    justifyContent: 'flex-start', 
-    paddingHorizontal: 12, 
-    minHeight: 300,
+    width: "100%",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    paddingHorizontal: 12,
+    minHeight: 250,
   },
   resultItem: {
-    width: '100%',
+    width: "100%",
     padding: 8,
     marginVertical: 4,
     borderRadius: 16,
