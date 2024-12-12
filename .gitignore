@@ -46,3 +46,4 @@ client/.env
 /server/appsettings.json
 /server/appsettings.Development.json
 /server/logs
+/server/Properties/PublishProfiles
