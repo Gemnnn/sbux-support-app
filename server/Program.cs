@@ -10,10 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // === Application Insights Connection String ===
 // Retrieve the Application Insights connection string from appsettings.json
-var appInsightsConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
+var appInsightsConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
 if (string.IsNullOrEmpty(appInsightsConnectionString))
 {
-    throw new InvalidOperationException("Application Insights connection string is missing.");
+    appInsightsConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
 }
 
 // === Serilog Configuration ===
@@ -44,16 +44,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // === Configure DbContext with SQL Server ===
-string dbConnectionString;
-if (builder.Environment.IsDevelopment())
+string dbConnectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
+if (string.IsNullOrEmpty(dbConnectionString))
 {
-    // Use the local database in development
     dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-}
-else
-{
-    // Use the Azure SQL Database connection string in production
-    dbConnectionString = builder.Configuration.GetConnectionString("AzureConnection");
 }
 
 builder.Services.AddDbContext<ProductDbContext>(options =>
@@ -66,14 +60,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 // === Configure Kestrel dynamically based on the environment ===
 builder.WebHost.ConfigureKestrel(options =>
 {
-    if (builder.Environment.IsDevelopment())
-    {
-        options.ListenAnyIP(5223); // Bind to all network interfaces in development
-    }
-    else
-    {
-        options.ListenLocalhost(5223); // Bind only to localhost in production
-    }
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
+    options.ListenAnyIP(int.Parse(port));
 });
 
 // === Configure CORS policies ===
@@ -92,7 +80,7 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy("AllowSpecific", builder =>
         {
-            builder.WithOrigins("https://your-production-domain.com") // Replace with your production domain
+            builder.WithOrigins("https://your-production-domain.com") // Replace with production frontend URL later
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
@@ -102,14 +90,24 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // === Configure HTTP request pipeline ===
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction()) 
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+        c.RoutePrefix = "swagger";
+    });
 }
 
+app.UseStaticFiles();
+
 app.UseCors(app.Environment.IsDevelopment() ? "AllowAll" : "AllowSpecific");
-app.UseHttpsRedirection();
+// Force HTTPS redirection in production
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.UseAuthorization();
 app.MapControllers();
 
