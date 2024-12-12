@@ -45,3 +45,4 @@ client/.env
 /server/Properties/launchSettings.json
 /server/appsettings.json
 /server/appsettings.Development.json
+/server/logs
