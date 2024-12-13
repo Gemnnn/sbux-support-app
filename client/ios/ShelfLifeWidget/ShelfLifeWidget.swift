@@ -99,7 +99,7 @@ struct ShelfLifeWidgetEntryView: View {
         Text("Shelf Life")
           .font(.system(size: 13))
           .bold()
-          .foregroundColor(creamWhiteColor)
+          .foregroundColor(lightBrownColor)
       }
       .padding(.bottom, 2)
       
@@ -135,7 +135,7 @@ struct ShelfLifeWidgetEntryView: View {
         Text("Shelf Life Dates")
           .font(.system(size: 15))
           .bold()
-          .foregroundColor(creamWhiteColor)
+          .foregroundColor(lightBrownColor)
       }
       .padding(.bottom, 4)
       
