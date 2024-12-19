@@ -12,8 +12,7 @@ import {
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
-import { Product } from "@/services/productService";
-import { fetchProductShelfLife } from "@/services/productService";
+import { Product, fetchProductShelfLife } from "../../services/productService";
 import Constants from "expo-constants";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"; // Icon library for UI elements
 

@@ -5,8 +5,9 @@
     "baseUrl": ".",              
     "paths": {
       "@/*": [
-        "./*"
+        "app/*"
       ],
+      "services/*": ["services/*"],
       "@env": [
         "types/env.d.ts"
       ]
