@@ -86,6 +86,10 @@ struct ShelfLifeWidgetEntryView: View {
     Color(red: 245/255, green: 240/255, blue: 225/255)
   }
   
+  var whiteColor: Color {
+      Color.white
+  }
+  
   var smallWidgetView: some View {
     VStack(alignment: .leading, spacing: 4) {
       HStack {
@@ -95,7 +99,7 @@ struct ShelfLifeWidgetEntryView: View {
         Text("Shelf Life")
           .font(.system(size: 13))
           .bold()
-          .foregroundColor(creamWhiteColor)
+          .foregroundColor(lightBrownColor)
       }
       .padding(.bottom, 2)
       
@@ -103,12 +107,12 @@ struct ShelfLifeWidgetEntryView: View {
         HStack {
           Text(expiry.label)
             .font(.body)
-            .foregroundColor(.white)
-          Spacer()
+            .foregroundColor(lightBrownColor)
+          Spacer(minLength: 1)
           Text(expiry.formattedDate)
             .font(.system(size: 16))
             .bold()
-            .foregroundColor(lightBrownColor)
+            .foregroundColor(whiteColor)
         }
         .padding(.vertical, 3)
         .padding(.horizontal, 1)
@@ -131,7 +135,7 @@ struct ShelfLifeWidgetEntryView: View {
         Text("Shelf Life Dates")
           .font(.system(size: 15))
           .bold()
-          .foregroundColor(creamWhiteColor)
+          .foregroundColor(lightBrownColor)
       }
       .padding(.bottom, 4)
       
@@ -141,12 +145,12 @@ struct ShelfLifeWidgetEntryView: View {
             HStack {
               Text(expiry.label)
                 .font(.body)
-                .foregroundColor(.white)
+                .foregroundColor(lightBrownColor)
               Spacer()
               Text(expiry.formattedDate)
                 .font(.system(size: 16))
                 .bold()
-                .foregroundColor(lightBrownColor)
+                .foregroundColor(whiteColor)
             }
             .padding(.vertical, 3)
             .padding(.horizontal, 2)
@@ -160,12 +164,12 @@ struct ShelfLifeWidgetEntryView: View {
             HStack {
               Text(expiry.label)
                 .font(.body)
-                .foregroundColor(.white)
+                .foregroundColor(lightBrownColor)
               Spacer()
               Text(expiry.formattedDate)
-                .font(.system(size: 18))
+                .font(.system(size: 17))
                 .bold()
-                .foregroundColor(lightBrownColor)
+                .foregroundColor(whiteColor)
             }
             .padding(.vertical, 3)
             .padding(.horizontal, 2)
