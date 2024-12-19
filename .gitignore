@@ -43,3 +43,8 @@ server/obj/project.nuget.cache
 # Environment variables
 client/.env
 /server/Properties/launchSettings.json
+/server/appsettings.json
+/server/appsettings.Development.json
+/server/logs
+/server/Properties/PublishProfiles
+/server/Properties
