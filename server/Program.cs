@@ -5,8 +5,13 @@ using server.Repositories;
 using server.Services;
 using Serilog;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Caching.Memory;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add MemoryCache service
+builder.Services.AddMemoryCache();
 
 // === Application Insights Connection String ===
 // Retrieve the Application Insights connection string from appsettings.json
@@ -47,7 +52,7 @@ builder.Services.AddSwaggerGen();
 string dbConnectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
 if (string.IsNullOrEmpty(dbConnectionString))
 {
-    dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    dbConnectionString = builder.Configuration.GetConnectionString("AzureConnection");
 }
 
 builder.Services.AddDbContext<ProductDbContext>(options =>
@@ -90,7 +95,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // === Configure HTTP request pipeline ===
-if (app.Environment.IsDevelopment() || app.Environment.IsProduction()) 
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
@@ -115,11 +120,19 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ProductDbContext>();
+    var cache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
+
     try
     {
         if (dbContext.Database.CanConnect())
         {
             Console.WriteLine("Database connection successful.");
+
+            // Preload data
+            var allProducts = dbContext.Products.ToList();
+            cache.Set("AllProducts", allProducts, TimeSpan.FromHours(1)); // Cache for 1 hour
+            //Console.WriteLine($"Preloaded {allProducts.Count} products into memory cache.");
+
         }
         else
         {
