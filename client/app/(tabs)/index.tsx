@@ -114,6 +114,7 @@ export default function HomeScreen() {
     setIsSearching(false); // Ensure the search state is reset
     Keyboard.dismiss(); // Dismiss the keyboard
     handleSearch(productName); // Proceed with navigation
+    setSearchQuery("");
   };
 
   const today = formatDate(new Date());
@@ -141,11 +142,13 @@ export default function HomeScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
+        <Text style={styles.warning}>This is an unofficial resource and is not sponsored by Starbucks.</Text>
         <View style={styles.main}>
+
           {/* Header Section */}
           <View style={styles.header}>
             <MaterialCommunityIcons name="coffee" size={48} color="#00704A" />
-            <Text style={styles.title}>DATE TRACKER</Text>
+            <Text style={styles.title}>DATE DOTTER</Text>
             <Text style={styles.subtitle}>☕ Today: {today}</Text>
           </View>
 
@@ -247,6 +250,13 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     shadowOffset: { width: 0, height: 5 },
     elevation: 6,
+  },
+  warning: {
+    alignItems: "center",
+    textAlign: "center",
+    color: "white",
+    marginBottom: 5,
+    fontSize: 10,
   },
   header: {
     alignItems: "center",
