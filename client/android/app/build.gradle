@@ -124,6 +124,9 @@ android {
     androidResources {
         ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 // Apply static values from `gradle.properties` to the `android.packagingOptions`
