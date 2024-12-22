@@ -95,8 +95,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// === Configure HTTP request pipeline ===
-if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+// Swagger on Debug Mode
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
