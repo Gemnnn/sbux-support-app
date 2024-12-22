@@ -40,6 +40,7 @@ builder.Services.AddApplicationInsightsTelemetry(options =>
 {
     options.ConnectionString = appInsightsConnectionString; // Set Application Insights connection string
     options.EnableAdaptiveSampling = true; // Enable adaptive sampling (recommended for production)
+    options.EnableHeartbeat = false; // Disable Heart Beat
     options.EnableDebugLogger = builder.Environment.IsDevelopment(); // Enable debug logger in development
 });
 
@@ -115,6 +116,9 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseAuthorization();
 app.MapControllers();
+
+
+app.MapGet("/", () => "Service is running.");
 
 // Test code for connecting with DB
 using (var scope = app.Services.CreateScope())
