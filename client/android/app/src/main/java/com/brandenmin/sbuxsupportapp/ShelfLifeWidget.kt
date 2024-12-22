@@ -1,44 +1,106 @@
 package com.brandenmin.sbuxsupportapp
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.widget.RemoteViews
+import java.text.SimpleDateFormat
+import java.util.*
 
-/**
- * Implementation of App Widget functionality.
- */
 class ShelfLifeWidget : AppWidgetProvider() {
+
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle
+    ) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
+        updateWidgetSize(context, appWidgetManager, appWidgetId, newOptions)
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
+            val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+            updateWidgetSize(context, appWidgetManager, appWidgetId, options)
         }
     }
 
-    override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
+    private fun updateWidgetSize(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        options: Bundle
+    ) {
+        val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
+        val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+
+        val cellWidth = (minWidth + 30) / 110
+        val cellHeight = (minHeight + 30) / 110
+        val isSmall = cellWidth < 3 && cellHeight <= 2
+
+        updateAppWidget(context, appWidgetManager, appWidgetId, isSmall)
     }
 
-    override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
+    companion object {
+        fun updateAppWidget(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int,
+            isSmall: Boolean
+        ) {
+            val views = if (isSmall) {
+                RemoteViews(context.packageName, R.layout.shelf_life_widget_small)
+            } else {
+                RemoteViews(context.packageName, R.layout.shelf_life_widget_medium)
+            }
+
+            val dateFormat = SimpleDateFormat("E, MMM d", Locale.getDefault())
+
+            val expiryDates = listOf(
+                "2d" to Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 2) },
+                "3d" to Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 3) },
+                "5d" to Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 5) },
+                "7d" to Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 7) },
+                "14d" to Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 14) }
+            ).map { (label, date) -> label to dateFormat.format(date.time) }
+
+            if (isSmall) {
+                views.setTextViewText(R.id.widgetTitle, " Shelf Life")
+                views.setTextViewText(R.id.widgetDate1Label, expiryDates[0].first)
+                views.setTextViewText(R.id.widgetDate1Result, expiryDates[0].second)
+                views.setTextViewText(R.id.widgetDate2Label, expiryDates[1].first)
+                views.setTextViewText(R.id.widgetDate2Result, expiryDates[1].second)
+                views.setTextViewText(R.id.widgetDate3Label, expiryDates[2].first)
+                views.setTextViewText(R.id.widgetDate3Result, expiryDates[2].second)
+            } else {
+                views.setTextViewText(R.id.widgetTitle, " Shelf Life Dates")
+                views.setTextViewText(R.id.widgetDate1Label, expiryDates[0].first)
+                views.setTextViewText(R.id.widgetDate1Result, expiryDates[0].second)
+                views.setTextViewText(R.id.widgetDate2Label, expiryDates[1].first)
+                views.setTextViewText(R.id.widgetDate2Result, expiryDates[1].second)
+                views.setTextViewText(R.id.widgetDate3Label, expiryDates[2].first)
+                views.setTextViewText(R.id.widgetDate3Result, expiryDates[2].second)
+                views.setTextViewText(R.id.widgetDate4Label, expiryDates[3].first)
+                views.setTextViewText(R.id.widgetDate4Result, expiryDates[3].second)
+                views.setTextViewText(R.id.widgetDate5Label, expiryDates[4].first)
+                views.setTextViewText(R.id.widgetDate5Result, expiryDates[4].second)
+            }
+
+            val intent = Intent(context, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(
+                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.widgetTitle, pendingIntent)
+
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
     }
-}
-
-internal fun updateAppWidget(
-    context: Context,
-    appWidgetManager: AppWidgetManager,
-    appWidgetId: Int
-) {
-    val widgetText = context.getString(R.string.appwidget_text)
-    // Construct the RemoteViews object
-    val views = RemoteViews(context.packageName, R.layout.shelf_life_widget)
-    views.setTextViewText(R.id.appwidget_text, widgetText)
-
-    // Instruct the widget manager to update the widget
-    appWidgetManager.updateAppWidget(appWidgetId, views)
 }
