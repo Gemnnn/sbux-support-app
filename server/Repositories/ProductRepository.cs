@@ -31,16 +31,23 @@ namespace server.Repositories
             //                     .Where(p => p.ProductName.Contains(partialName))
             //                     .ToListAsync();
 
-            if (_cache.TryGetValue("AllProducts", out IEnumerable<Product> allProducts))
-            {
+            // create the cache key
+            string cacheKey = $"Search_{partialName.ToLower()}";
 
-                return allProducts.Where(p => p.ProductName.Contains(partialName, StringComparison.OrdinalIgnoreCase));
+            // cache check
+            if (!_cache.TryGetValue(cacheKey, out IEnumerable<Product> cachedResults))
+            {
+                // optimize SQL LIKE query
+                cachedResults = await _context.Products
+                    .Where(p => EF.Functions.Like(p.ProductName, $"%{partialName}%"))
+                    .AsNoTracking() // No Tracking
+                    .ToListAsync();
+
+                // 10 minutes Available
+                _cache.Set(cacheKey, cachedResults, TimeSpan.FromMinutes(10));
             }
 
-
-            return await _context.Products
-                                 .Where(p => p.ProductName.Contains(partialName))
-                                 .ToListAsync();
+            return cachedResults;
 
         }
     }
