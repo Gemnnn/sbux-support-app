@@ -108,7 +108,7 @@ struct ShelfLifeWidgetEntryView: View {
           Text(expiry.label)
             .font(.body)
             .foregroundColor(lightBrownColor)
-          Spacer(minLength: 1)
+          Spacer(minLength: 0)
           Text(expiry.formattedDate)
             .font(.system(size: 16))
             .bold()
