@@ -86,7 +86,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.sbuxsupportapp"
+    namespace 'com.brandenmin.sbuxsupportapp'
     defaultConfig {
         applicationId 'com.brandenmin.sbuxsupportapp'
         minSdkVersion rootProject.ext.minSdkVersion
@@ -123,6 +123,9 @@ android {
     }
     androidResources {
         ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 

@@ -1,6 +1,18 @@
 <resources>
-  <color name="splashscreen_background">#ffffff</color>
-  <color name="iconBackground">#ffffff</color>
-  <color name="colorPrimary">#023c69</color>
-  <color name="colorPrimaryDark">#ffffff</color>
+    <color name="splashscreen_background">#00704A</color>
+    <color name="iconBackground">#ffffff</color>
+    <color name="colorPrimary">#023c69</color>
+    <color name="colorPrimaryDark">#00704A</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+
+    <!-- Widget Color -->
+    <color name="widgetBackground">#1E3932</color> <!-- Green -->
+    <color name="light_brown">#BA8C63</color> <!-- Light Brown -->
+    <color name="creamWhite">#F5F0E1</color> <!-- Cream White -->
+    <color name="white">#FFFFFF</color> <!-- White -->
+    <color name="blackOpacity">#1A1A1A</color> <!-- Transparent Black -->
+    <color name="accentColor">#039BE5</color> <!-- Blue Accent -->
 </resources>

@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/supportWidget"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/widgetBackground">
+
+    <!-- Title with Coffee Icon -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_coffee_cup" />
+        <TextView
+            android:id="@+id/widgetTitle"
+            android:text="Shelf Life"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/light_brown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- First Row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/date_background"
+        android:layout_marginTop="4dp"
+        android:padding="8dp">
+
+        <!-- Label -->
+        <TextView
+            android:id="@+id/widgetDate1Label"
+            android:text="2d:"
+            android:textSize="20sp"
+            android:textColor="@color/light_brown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!-- Result -->
+        <TextView
+            android:id="@+id/widgetDate1Result"
+            android:text="Loading..."
+            android:textSize="20sp"
+            android:textColor="@color/creamWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- Second Row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/date_background"
+        android:layout_marginTop="4dp"
+        android:padding="8dp">
+
+        <!-- Label -->
+        <TextView
+            android:id="@+id/widgetDate2Label"
+            android:text="3d:"
+            android:textSize="20sp"
+            android:textColor="@color/light_brown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!-- Result -->
+        <TextView
+            android:id="@+id/widgetDate2Result"
+            android:text="Loading..."
+            android:textSize="20sp"
+            android:textColor="@color/creamWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- Third Row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/date_background"
+        android:layout_marginTop="4dp"
+        android:padding="8dp">
+
+        <!-- Label -->
+        <TextView
+            android:id="@+id/widgetDate3Label"
+            android:text="5d:"
+            android:textSize="20sp"
+            android:textColor="@color/light_brown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!-- Result -->
+        <TextView
+            android:id="@+id/widgetDate3Result"
+            android:text="Loading..."
+            android:textSize="20sp"
+            android:textColor="@color/creamWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+</LinearLayout>
