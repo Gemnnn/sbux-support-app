@@ -58,131 +58,147 @@ func formatDate(date: Date) -> String {
 
 struct ShelfLifeWidgetEntryView: View {
   @Environment(\.widgetFamily) var widgetFamily
-  var entry: ShelfLifeProvider.Entry
-  
+  var entry: ShelfLifeEntry
+
   var body: some View {
     switch widgetFamily {
     case .systemSmall:
-      smallWidgetView
-        .containerBackground(for: .widget) { GreenColor }
+      SmallWidgetView(entry: entry)
+        .applyBackground()
     case .systemMedium:
-      mediumWidgetView
-        .containerBackground(for: .widget) { GreenColor }
+      MediumWidgetView(entry: entry)
+        .applyBackground()
     default:
-      mediumWidgetView
-        .containerBackground(for: .widget) { GreenColor }
+      MediumWidgetView(entry: entry)
+        .applyBackground()
     }
-  }
-  
-  var GreenColor: Color {
-    Color(red: 30/255, green: 57/255, blue: 50/255)
-  }
-  
-  var lightBrownColor: Color {
-    Color(red: 186/255, green: 140/255, blue: 99/255)
-  }
-  
-  var creamWhiteColor: Color {
-    Color(red: 245/255, green: 240/255, blue: 225/255)
-  }
-  
-  var whiteColor: Color {
-      Color.white
-  }
-  
-  var smallWidgetView: some View {
-    VStack(alignment: .leading, spacing: 4) {
-      HStack {
-        Image(systemName: "cup.and.saucer.fill")
-          .foregroundColor(creamWhiteColor)
-          .font(.system(size: 15))
-        Text("Shelf Life")
-          .font(.system(size: 13))
-          .bold()
-          .foregroundColor(lightBrownColor)
-      }
-      .padding(.bottom, 2)
-      
-      ForEach(entry.expiryDates.prefix(3)) { expiry in
-        HStack {
-          Text(expiry.label)
-            .font(.body)
-            .foregroundColor(lightBrownColor)
-          Spacer(minLength: 0)
-          Text(expiry.formattedDate)
-            .font(.system(size: 16))
-            .bold()
-            .foregroundColor(whiteColor)
-        }
-        .padding(.vertical, 3)
-        .padding(.horizontal, 1)
-        .background(Color.black.opacity(0.1))
-        .cornerRadius(8)
-      }
-    }
-    .padding(.horizontal, 1)
-    .padding(.vertical, 3)
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-  }
-  
-  
-  var mediumWidgetView: some View {
-    VStack(alignment: .leading, spacing: 6) {
-      HStack {
-        Image(systemName: "cup.and.saucer.fill") // icon
-          .foregroundColor(creamWhiteColor)
-          .font(.system(size: 20))
-        Text("Shelf Life Dates")
-          .font(.system(size: 15))
-          .bold()
-          .foregroundColor(lightBrownColor)
-      }
-      .padding(.bottom, 4)
-      
-      HStack(alignment: .top) {
-        VStack(alignment: .leading, spacing: 4) {
-          ForEach(entry.expiryDates.prefix(3)) { expiry in
-            HStack {
-              Text(expiry.label)
-                .font(.body)
-                .foregroundColor(lightBrownColor)
-              Spacer()
-              Text(expiry.formattedDate)
-                .font(.system(size: 16))
-                .bold()
-                .foregroundColor(whiteColor)
-            }
-            .padding(.vertical, 3)
-            .padding(.horizontal, 2)
-            .background(Color.black.opacity(0.1))
-            .cornerRadius(8)
-          }
-        }
-        Spacer()
-        VStack(alignment: .leading, spacing: 4) {
-          ForEach(entry.expiryDates[3..<5]) { expiry in
-            HStack {
-              Text(expiry.label)
-                .font(.body)
-                .foregroundColor(lightBrownColor)
-              Spacer()
-              Text(expiry.formattedDate)
-                .font(.system(size: 17))
-                .bold()
-                .foregroundColor(whiteColor)
-            }
-            .padding(.vertical, 3)
-            .padding(.horizontal, 2)
-            .background(Color.black.opacity(0.1))
-            .cornerRadius(8)
-          }
-        }
-      }
-    }
-    .padding(3)
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
   }
 }
+
+extension View {
+  @ViewBuilder
+  func applyBackground() -> some View {
+    if #available(iOS 17.0, *) {
+      self.containerBackground(for: .widget) { Color(red: 30/255, green: 57/255, blue: 50/255) }
+    } else {
+      self.background(Color(red: 30/255, green: 57/255, blue: 50/255))
+    }
+  }
+}
+
+var GreenColor: Color {
+    Color(red: 30/255, green: 57/255, blue: 50/255)
+}
+
+var lightBrownColor: Color {
+    Color(red: 186/255, green: 140/255, blue: 99/255)
+}
+
+var creamWhiteColor: Color {
+    Color(red: 245/255, green: 240/255, blue: 225/255)
+}
+
+var whiteColor: Color {
+    Color.white
+}
+
+struct SmallWidgetView: View {
+    var entry: ShelfLifeEntry
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Image(systemName: "cup.and.saucer.fill")
+                    .foregroundColor(creamWhiteColor)
+                    .font(.system(size: 15))
+                Text("Shelf Life")
+                    .font(.system(size: 13))
+                    .bold()
+                    .foregroundColor(lightBrownColor)
+            }
+            .padding(.bottom, 2)
+            ForEach(entry.expiryDates.prefix(3)) { expiry in
+                HStack {
+                    Text(expiry.label)
+                        .font(.body)
+                        .foregroundColor(lightBrownColor)
+                    Spacer()
+                    Text(expiry.formattedDate)
+                        .font(.system(size: 15))
+                        .foregroundColor(whiteColor)
+                }
+                .padding(.vertical, 3)
+                .padding(.horizontal, 1)
+                .background(Color.black.opacity(0.1))
+                .cornerRadius(8)
+            }
+        }
+        .padding(.horizontal, 1)
+        .padding(.vertical, 3)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+}
+
+struct MediumWidgetView: View {
+    var entry: ShelfLifeEntry
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Image(systemName: "cup.and.saucer.fill")
+                    .foregroundColor(creamWhiteColor)
+                    .font(.system(size: 20))
+                Text("Shelf Life Dates")
+                    .font(.system(size: 15))
+                    .bold()
+                    .foregroundColor(lightBrownColor)
+            }
+            .padding(.bottom, 4)
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(entry.expiryDates.prefix(3)) { expiry in
+                        HStack {
+                            Text(expiry.label)
+                                .font(.body)
+                                .foregroundColor(lightBrownColor)
+                            Spacer()
+                            Text(expiry.formattedDate)
+                                .font(.system(size: 16))
+                                .bold()
+                                .foregroundColor(whiteColor)
+                        }
+                        .padding(.vertical, 3)
+                        .padding(.horizontal, 2)
+                        .background(Color.black.opacity(0.1))
+                        .cornerRadius(8)
+                    }
+                }
+                Spacer()
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(entry.expiryDates[3..<5]) { expiry in
+                        HStack {
+                            Text(expiry.label)
+                                .font(.body)
+                                .foregroundColor(lightBrownColor)
+                            Spacer()
+                            Text(expiry.formattedDate)
+                                .font(.system(size: 17))
+                                .bold()
+                                .foregroundColor(whiteColor)
+                        }
+                        .padding(.vertical, 3)
+                        .padding(.horizontal, 2)
+                        .background(Color.black.opacity(0.1))
+                        .cornerRadius(8)
+                    }
+                }
+            }
+        }
+        .padding(3)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+}
+
 struct ShelfLifeWidget: Widget {
     let kind: String = "ShelfLifeWidget"
 
