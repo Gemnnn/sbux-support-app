@@ -14,6 +14,22 @@ const dayColors: Record<string, string> = {
   Sunday: '#000000',
 };
 
+// Function to parse time into 12-hour format and determine AM/PM
+const parseTimeTo12HourFormat = (time: string) => {
+  const isPM = time.toUpperCase().includes('PM'); // Determine if time includes PM
+  const timeParts = time.replace(/AM|PM/i, '').trim().split(':'); // Remove AM/PM and split time
+  const hour = parseInt(timeParts[0], 10);
+  const minute = parseInt(timeParts[1], 10);
+
+  let displayHour = hour % 12 || 12; // Convert to 12-hour format
+
+  return {
+    displayHour,
+    formattedMinute: minute < 10 ? `0${minute}` : minute,
+    isPM,
+  };
+};
+
 const DateSticker = ({ product }: { product: any }) => {
   const { productName, expirationDate } = product;
 
@@ -24,37 +40,11 @@ const DateSticker = ({ product }: { product: any }) => {
 
   const { dayOfWeek, month, date, time } = expirationDate;
   const backgroundColor = dayColors[dayOfWeek] || '#ccc';
-  
-  // Parse time
-  const timeParts = time.split(':'); // Expect "HH:mm" format
-  const hour = parseInt(timeParts[0], 10); // Extract hour
-  const minute = parseInt(timeParts[1], 10); // Extract minute
 
-  // Correct AM/PM calculation
-  let isPM = false;
-  let displayHour = hour;
+  // Parse time and calculate AM/PM
+  const { displayHour, formattedMinute, isPM } = parseTimeTo12HourFormat(time);
 
-  if (hour === 0) {
-    // 0:00 (midnight) -> 12:00 AM
-    displayHour = 12;
-    isPM = false;
-  } else if (hour === 12) {
-    // 12:00 -> Always PM
-    displayHour = 12;
-    isPM = time.includes("PM"); // Only set to PM if explicitly marked as PM
-  } else if (hour > 12) {
-    // Convert 24-hour to 12-hour format for PM times
-    displayHour = hour % 12;
-    isPM = true;
-  } else {
-    // AM times from 1:00 to 11:59
-    isPM = false;
-  }
-
-  const formattedMinute = minute < 10 ? `0${minute}` : minute;
-
-  // Debugging output
-  console.log(`Original Time: ${time}, Parsed: ${hour}:${minute}, Display: ${displayHour}:${formattedMinute} ${isPM ? 'PM' : 'AM'}`);
+  console.log(`Parsed Time: ${time}, Display: ${displayHour}:${formattedMinute}, isPM: ${isPM}`);
 
   return (
     <View style={styles.stickerContainer}>
