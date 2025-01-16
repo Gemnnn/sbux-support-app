@@ -11,6 +11,6 @@ import SwiftUI
 @main
 struct ShelfLifeWidgetBundle: WidgetBundle {
     var body: some Widget {
-        ShelfLifeWidget()
+        ShelfLifeStaticWidget()
     }
 }
