@@ -2,7 +2,7 @@
 //  ShelfLifeWidgetBundle.swift
 //  ShelfLifeWidget
 //
-//  Created by Branden on 11/24/24.
+//  Created by Sol on 1/23/25.
 //
 
 import WidgetKit
@@ -11,6 +11,6 @@ import SwiftUI
 @main
 struct ShelfLifeWidgetBundle: WidgetBundle {
     var body: some Widget {
-        ShelfLifeStaticWidget()
+        ShelfLifeWidget()
     }
 }

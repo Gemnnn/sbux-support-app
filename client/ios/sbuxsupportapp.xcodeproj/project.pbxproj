@@ -14,9 +14,11 @@
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		E3570ADA3DD764F4814FB467 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F6329DBD220A5FD9DDB2E6A2 /* PrivacyInfo.xcprivacy */; };
-		F059468163CCBA6C8F80E793 /* libPods-sbuxsupportapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1723FFDC5252B33417DA03 /* libPods-sbuxsupportapp.a */; };
+		EE43BA0B89CA45F8B9A1B411 /* libPods-sbuxsupportapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD41F3DCDAF975E9CAF6FD7C /* libPods-sbuxsupportapp.a */; };
 		F4678D1B2D41EE7300BF0EF3 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F4678D1A2D41EE7300BF0EF3 /* main.jsbundle */; };
 		F4678D1C2D41EE7300BF0EF3 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F4678D1A2D41EE7300BF0EF3 /* main.jsbundle */; };
+		F4BECDDD2D45EEED000AE61A /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F4BECDDC2D45EEED000AE61A /* assets */; };
+		F4BECDDE2D45EEF8000AE61A /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F4BECDDC2D45EEED000AE61A /* assets */; };
 		F4D9355B2CF436AB00141A94 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D9355A2CF436AA00141A94 /* WidgetKit.framework */; };
 		F4D9355D2CF436AB00141A94 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D9355C2CF436AB00141A94 /* SwiftUI.framework */; };
 		F4D9356A2CF436AF00141A94 /* ShelfLifeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F4D935592CF436AA00141A94 /* ShelfLifeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -55,13 +57,14 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = sbuxsupportapp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = sbuxsupportapp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = sbuxsupportapp/main.m; sourceTree = "<group>"; };
-		224047D5E89D61CED13F7C89 /* Pods-sbuxsupportapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sbuxsupportapp.debug.xcconfig"; path = "Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp.debug.xcconfig"; sourceTree = "<group>"; };
-		8A9AA3FEA4D4019AA877DDF6 /* Pods-sbuxsupportapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sbuxsupportapp.release.xcconfig"; path = "Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp.release.xcconfig"; sourceTree = "<group>"; };
+		A3DCB9A88D30F4EC79DFB6DF /* Pods-sbuxsupportapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sbuxsupportapp.release.xcconfig"; path = "Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = sbuxsupportapp/SplashScreen.storyboard; sourceTree = "<group>"; };
-		AB1723FFDC5252B33417DA03 /* libPods-sbuxsupportapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sbuxsupportapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		C9F1EFFB5EF2E101C1077A90 /* Pods-sbuxsupportapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sbuxsupportapp.debug.xcconfig"; path = "Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp.debug.xcconfig"; sourceTree = "<group>"; };
+		CD41F3DCDAF975E9CAF6FD7C /* libPods-sbuxsupportapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sbuxsupportapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F4678D1A2D41EE7300BF0EF3 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		F4BECDDC2D45EEED000AE61A /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		F4D935592CF436AA00141A94 /* ShelfLifeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShelfLifeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4D9355A2CF436AA00141A94 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		F4D9355C2CF436AB00141A94 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -95,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F059468163CCBA6C8F80E793 /* libPods-sbuxsupportapp.a in Frameworks */,
+				EE43BA0B89CA45F8B9A1B411 /* libPods-sbuxsupportapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +136,7 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				F4D9355A2CF436AA00141A94 /* WidgetKit.framework */,
 				F4D9355C2CF436AB00141A94 /* SwiftUI.framework */,
-				AB1723FFDC5252B33417DA03 /* libPods-sbuxsupportapp.a */,
+				CD41F3DCDAF975E9CAF6FD7C /* libPods-sbuxsupportapp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F4BECDDC2D45EEED000AE61A /* assets */,
 				F4678D1A2D41EE7300BF0EF3 /* main.jsbundle */,
 				13B07FAE1A68108700A75B9A /* sbuxsupportapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -191,8 +195,8 @@
 		D65327D7A22EEC0BE12398D9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				224047D5E89D61CED13F7C89 /* Pods-sbuxsupportapp.debug.xcconfig */,
-				8A9AA3FEA4D4019AA877DDF6 /* Pods-sbuxsupportapp.release.xcconfig */,
+				C9F1EFFB5EF2E101C1077A90 /* Pods-sbuxsupportapp.debug.xcconfig */,
+				A3DCB9A88D30F4EC79DFB6DF /* Pods-sbuxsupportapp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -212,14 +216,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "sbuxsupportapp" */;
 			buildPhases = (
-				FC63A745552985172927CF2E /* [CP] Check Pods Manifest.lock */,
+				C75F54545CAFE6D052554984 /* [CP] Check Pods Manifest.lock */,
 				A9BF88A19DDADCAEF5624232 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				F4D9356F2CF436AF00141A94 /* Embed Foundation Extensions */,
-				FF06FA403813012796DDDA65 /* [CP] Copy Pods Resources */,
+				C9006F21354D4238A4A8BBA6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -292,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4BECDDD2D45EEED000AE61A /* assets in Resources */,
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				F4678D1B2D41EE7300BF0EF3 /* main.jsbundle in Resources */,
@@ -304,6 +309,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4BECDDE2D45EEF8000AE61A /* assets in Resources */,
 				F4678D1C2D41EE7300BF0EF3 /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,7 +351,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-sbuxsupportapp/expo-configure-project.sh\"\n";
 		};
-		FC63A745552985172927CF2E /* [CP] Check Pods Manifest.lock */ = {
+		C75F54545CAFE6D052554984 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -367,7 +373,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FF06FA403813012796DDDA65 /* [CP] Copy Pods Resources */ = {
+		C9006F21354D4238A4A8BBA6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -418,7 +424,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 224047D5E89D61CED13F7C89 /* Pods-sbuxsupportapp.debug.xcconfig */;
+			baseConfigurationReference = C9F1EFFB5EF2E101C1077A90 /* Pods-sbuxsupportapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -458,7 +464,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8A9AA3FEA4D4019AA877DDF6 /* Pods-sbuxsupportapp.release.xcconfig */;
+			baseConfigurationReference = A3DCB9A88D30F4EC79DFB6DF /* Pods-sbuxsupportapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
