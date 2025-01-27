@@ -2,28 +2,35 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from 'hooks/useColorScheme';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync(); // Prevent splash screen from auto-hiding
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
+  const [appReady, setAppReady] = useState(false); // Track app readiness
+  const [fontsLoaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    async function prepare() {
+      if (fontsLoaded) {
+        // Perform any additional app initialization here
+        await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate loading delay (e.g., API calls)
+        setAppReady(true); // Set app as ready
+        await SplashScreen.hideAsync(); // Hide splash screen
+      }
     }
-  }, [loaded]);
 
-  if (!loaded) {
-    return null;
+    prepare();
+  }, [fontsLoaded]);
+
+  if (!appReady) {
+    return null; // Prevent app rendering until ready
   }
 
   return (
