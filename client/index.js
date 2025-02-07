@@ -10,6 +10,13 @@
 import { AppRegistry, Platform } from 'react-native';
 import App from './app/(tabs)/index';
 import { name as appName } from './app.json';
+import mobileAds from 'react-native-google-mobile-ads';
+
+mobileAds()
+  .initialize()
+  .then(() => {
+    console.log('✅ AdMob Initialized Successfully');
+  });
 
 if (Platform.OS === 'web') {
   const rootTag = document.getElementById('root') || document.getElementById(appName);
