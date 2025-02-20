@@ -48,3 +48,4 @@ client/.env
 /server/logs
 /server/Properties/PublishProfiles
 /server/Properties
+client/android/my-release-key.keystore
