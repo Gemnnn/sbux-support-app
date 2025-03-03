@@ -48,3 +48,6 @@ client/.env
 /server/logs
 /server/Properties/PublishProfiles
 /server/Properties
+client/ios/sbuxsupportapp/Info.plist
+client/components/AdBanner.tsx
+client/ios/sbuxsupportapp/Info.plist
