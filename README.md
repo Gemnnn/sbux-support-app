@@ -17,6 +17,8 @@ The `Sbux Support App` is a productivity-focused application designed to streaml
 The app consists of a React Native-based frontend and a .NET Core backend, providing a seamless and efficient user experience.
 This guide explains how to clone, set up, and run the project on a MacOS environment for both the front end and back end.
 
+**Download the app on the [App Store](https://apps.apple.com/ca/app/cafe-assist/id6740605615).**
+
 ---
 
 ## **Features**
