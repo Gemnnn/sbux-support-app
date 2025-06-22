@@ -87,7 +87,7 @@ export default function HomeScreen() {
     Animated.timing(animation, {
       toValue: isSearching ? -250 : 0, // Move the section further up when searching
       duration: 300,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   }, [isSearching]);
 
@@ -140,20 +140,19 @@ export default function HomeScreen() {
             setSearchQuery(""); // Clear the search query
           }
         }}
-        accessible={false} // Prevent accessibility issues
+        accessible={false}
       >
         <View style={styles.contentContainer}>
           <Text style={styles.warning}>This is an unofficial resource and is not sponsored by any companies.</Text>
           <View style={styles.main}>
-
-            {/* Header Section */}
+            {/* Header */}
             <View style={styles.header}>
               <MaterialCommunityIcons name="coffee" size={48} color="#00704A" />
               <Text style={styles.title}>DATE DOTTER</Text>
               <Text style={styles.subtitle}>☕ Today: {today}</Text>
             </View>
 
-            {/* Expiry Dates Section */}
+            {/* Expiry Dates */}
             <View style={styles.card}>
               <Text style={styles.cardTitle}>📅 Expiry Dates</Text>
               {dates.map((item, index) => (
@@ -165,8 +164,11 @@ export default function HomeScreen() {
             </View>
 
             {/* Search Bar Section */}
-            <Animated.View style={{ transform: [{ translateY: animation }] }}>
-              <View style={styles.card}>
+            <View style={styles.card}>
+              {/* 🔧 UPDATED: animation moved to inner wrapper only */}
+              <Animated.View
+                style={[styles.searchBarWrapper, { transform: [{ translateY: animation }] }]}
+              >
                 <View style={styles.searchBar}>
                   {isSearching ? (
                     <TouchableOpacity onPress={handleBackButton}>
@@ -182,8 +184,7 @@ export default function HomeScreen() {
                     value={searchQuery}
                     onChangeText={(text) => setSearchQuery(text)}
                     onFocus={() => {
-                      setIsSearching(true); // Activate search mode
-                      setIsKeyboardVisible(true);
+                      setIsSearching(true); // 🔧 UPDATED: no need to also set keyboard state
                     }}
                   />
                   {searchQuery.trim() !== "" && (
@@ -192,10 +193,10 @@ export default function HomeScreen() {
                     </TouchableOpacity>
                   )}
                 </View>
-              </View>
-            </Animated.View>
+              </Animated.View>
+            </View>
 
-            {/* Search Results Section */}
+            {/* Search Results */}
             {isSearching && (
               <View style={{ flex: 1 }} onStartShouldSetResponder={() => true}>
                 <Animated.View
@@ -210,7 +211,7 @@ export default function HomeScreen() {
                   ) : searchResults.length > 0 ? (
                     <FlatList
                       data={searchResults}
-                      keyboardShouldPersistTaps="handled" // Ensure taps on results work
+                      keyboardShouldPersistTaps="handled"
                       keyExtractor={(item) => item.productName}
                       contentContainerStyle={styles.resultContainer}
                       renderItem={({ item }) => (
@@ -230,7 +231,7 @@ export default function HomeScreen() {
             )}
           </View>
 
-          {/* AdBanner Component */}
+          {/* Ad Banner */}
           <AdBanner />
         </View>
       </TouchableWithoutFeedback>
@@ -259,8 +260,8 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     shadowOffset: { width: 0, height: 5 },
     elevation: 6,
-    width: "100%", // Ensure the main content takes the full width
-    maxWidth: 600, // Optionally, set a maximum width for larger screens
+    width: "100%",
+    maxWidth: 600,
   },
   warning: {
     alignItems: "center",
@@ -283,6 +284,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#4B3621",
     marginTop: 4,
+  },
+  searchBarWrapper: {
+    // 🆕 NEW WRAPPER FOR ANIMATION
   },
   searchBar: {
     flexDirection: "row",
