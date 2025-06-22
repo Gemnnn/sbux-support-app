@@ -163,47 +163,41 @@ export default function HomeScreen() {
               ))}
             </View>
 
-            {/* Search Bar Section */}
-            <View style={styles.card}>
-              {/* 🔧 UPDATED: animation moved to inner wrapper only */}
-              <Animated.View
-                style={[styles.searchBarWrapper, { transform: [{ translateY: animation }] }]}
-              >
-                <View style={styles.searchBar}>
-                  {isSearching ? (
-                    <TouchableOpacity onPress={handleBackButton}>
-                      <Ionicons name="arrow-back" size={20} color="#888" />
-                    </TouchableOpacity>
-                  ) : (
-                    <Ionicons name="search" size={20} color="#888" />
-                  )}
-                  <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search for products..."
-                    placeholderTextColor="#888"
-                    value={searchQuery}
-                    onChangeText={(text) => setSearchQuery(text)}
-                    onFocus={() => {
-                      setIsSearching(true); // 🔧 UPDATED: no need to also set keyboard state
-                    }}
-                  />
-                  {searchQuery.trim() !== "" && (
-                    <TouchableOpacity onPress={() => setSearchQuery("")}>
-                      <Ionicons name="close-circle" size={20} color="#888" />
-                    </TouchableOpacity>
-                  )}
-                </View>
-              </Animated.View>
-            </View>
+            {/* 🔧 UPDATED: SearchBar no longer uses `card`, no duplicate border */}
+            <Animated.View style={[styles.searchBarWrapper, { transform: [{ translateY: animation }] }]}>
+              <View style={styles.searchBar}>
+                {isSearching ? (
+                  <TouchableOpacity onPress={handleBackButton}>
+                    <Ionicons name="arrow-back" size={20} color="#888" />
+                  </TouchableOpacity>
+                ) : (
+                  <Ionicons name="search" size={20} color="#888" />
+                )}
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Search for products..."
+                  placeholderTextColor="#888"
+                  value={searchQuery}
+                  onChangeText={(text) => setSearchQuery(text)}
+                  onFocus={() => {
+                    setIsSearching(true); // 🔧 UPDATED: only toggle search state
+                  }}
+                />
+                {searchQuery.trim() !== "" && (
+                  <TouchableOpacity onPress={() => setSearchQuery("")}>
+                    <Ionicons name="close-circle" size={20} color="#888" />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </Animated.View>
 
             {/* Search Results */}
             {isSearching && (
-              <View style={{ flex: 1 }} onStartShouldSetResponder={() => true}>
+              <View style={{ flex: 1, width: '100%' }} onStartShouldSetResponder={() => true}>
                 <Animated.View
                   style={[
-                    styles.card,
                     styles.resultContainer,
-                    { transform: [{ translateY: animation }] },
+                    { transform: [{ translateY: animation }], maxHeight: 300 },
                   ]}
                 >
                   {loading ? (
@@ -213,7 +207,7 @@ export default function HomeScreen() {
                       data={searchResults}
                       keyboardShouldPersistTaps="handled"
                       keyExtractor={(item) => item.productName}
-                      contentContainerStyle={styles.resultContainer}
+                      contentContainerStyle={styles.resultListContent}
                       renderItem={({ item }) => (
                         <TouchableOpacity
                           style={styles.resultItem}
@@ -285,16 +279,26 @@ const styles = StyleSheet.create({
     color: "#4B3621",
     marginTop: 4,
   },
+  // 🆕 NEW WRAPPER FOR ANIMATION (ONLY ONE BORDER, FIXED)
   searchBarWrapper: {
-    // 🆕 NEW WRAPPER FOR ANIMATION
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    marginBottom: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F1F8F5",
+    backgroundColor: "#FFFFFF",
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 12,
+    borderWidth: 1,
+    borderColor: "#E8F5E9",
   },
   searchInput: {
     flex: 1,
@@ -329,12 +333,17 @@ const styles = StyleSheet.create({
     color: "#00704A",
   },
   resultContainer: {
-    flex: 1,
     width: "100%",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    paddingHorizontal: 12,
     minHeight: 250,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: "#E8F5E9",
+    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+  },
+  resultListContent: {
+    paddingVertical: 4,
+    width: "85%",
   },
   resultItem: {
     width: "100%",
