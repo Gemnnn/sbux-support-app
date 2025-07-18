@@ -50,4 +50,4 @@ client/.env
 /server/Properties
 client/ios/sbuxsupportapp/Info.plist
 client/components/AdBanner.tsx
-client/ios/sbuxsupportapp/Info.plist
+client/android/my-release-key.keystore
