@@ -11,12 +11,12 @@ import {
   Animated,
   TouchableWithoutFeedback,
 } from "react-native";
-
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "expo-router";
 import { Product, fetchProductShelfLife } from "../../services/productService";
 import Constants from "expo-constants";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import AdBanner from "../../components/AdBanner";
 
 const formatDate = (date: Date) => {
   return date.toLocaleDateString("en-US", {
@@ -87,7 +87,7 @@ export default function HomeScreen() {
     Animated.timing(animation, {
       toValue: isSearching ? -250 : 0, // Move the section further up when searching
       duration: 300,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   }, [isSearching]);
 
@@ -128,44 +128,43 @@ export default function HomeScreen() {
   ];
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss(); // Close the keyboard
-        if (isSearching) {
-          setIsSearching(false); // Reset search state
-          setSearchQuery(""); // Clear the search query
-        }
-      }}
-      accessible={false} // Prevent accessibility issues
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss(); // Close the keyboard
+          if (isSearching) {
+            setIsSearching(false); // Reset search state
+            setSearchQuery(""); // Clear the search query
+          }
+        }}
+        accessible={false}
       >
-        <Text style={styles.warning}>This is an unofficial resource and is not sponsored by Starbucks.</Text>
-        <View style={styles.main}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.warning}>This is an unofficial resource and is not sponsored by any companies.</Text>
+          <View style={styles.main}>
+            {/* Header */}
+            <View style={styles.header}>
+              <MaterialCommunityIcons name="coffee" size={48} color="#00704A" />
+              <Text style={styles.title}>DATE DOTTER</Text>
+              <Text style={styles.subtitle}>☕ Today: {today}</Text>
+            </View>
 
-          {/* Header Section */}
-          <View style={styles.header}>
-            <MaterialCommunityIcons name="coffee" size={48} color="#00704A" />
-            <Text style={styles.title}>DATE DOTTER</Text>
-            <Text style={styles.subtitle}>☕ Today: {today}</Text>
-          </View>
-
-          {/* Expiry Dates Section */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>📅 Expiry Dates</Text>
-            {dates.map((item, index) => (
-              <View key={index} style={styles.dateRow}>
-                <Text style={styles.label}>{item.label}</Text>
-                <Text style={styles.date}>{item.date}</Text>
-              </View>
-            ))}
-          </View>
-
-          {/* Search Bar Section */}
-          <Animated.View style={{ transform: [{ translateY: animation }] }}>
+            {/* Expiry Dates */}
             <View style={styles.card}>
+              <Text style={styles.cardTitle}>📅 Expiry Dates</Text>
+              {dates.map((item, index) => (
+                <View key={index} style={styles.dateRow}>
+                  <Text style={styles.label}>{item.label}</Text>
+                  <Text style={styles.date}>{item.date}</Text>
+                </View>
+              ))}
+            </View>
+
+            {/* 🔧 UPDATED: SearchBar no longer uses `card`, no duplicate border */}
+            <Animated.View style={[styles.searchBarWrapper, { transform: [{ translateY: animation }] }]}>
               <View style={styles.searchBar}>
                 {isSearching ? (
                   <TouchableOpacity onPress={handleBackButton}>
@@ -181,8 +180,7 @@ export default function HomeScreen() {
                   value={searchQuery}
                   onChangeText={(text) => setSearchQuery(text)}
                   onFocus={() => {
-                    setIsSearching(true); // Activate search mode
-                    setIsKeyboardVisible(true);
+                    setIsSearching(true); // 🔧 UPDATED: only toggle search state
                   }}
                 />
                 {searchQuery.trim() !== "" && (
@@ -191,54 +189,60 @@ export default function HomeScreen() {
                   </TouchableOpacity>
                 )}
               </View>
-            </View>
-          </Animated.View>
+            </Animated.View>
 
-          {/* Search Results Section */}
-          {isSearching && (
-            <View style={{ flex: 1 }} onStartShouldSetResponder={() => true}>
-              <Animated.View
-                style={[
-                  styles.card,
-                  styles.resultContainer,
-                  { transform: [{ translateY: animation }] },
-                ]}
-              >
-                {loading ? (
-                  <Text style={styles.loadingText}>Loading...</Text>
-                ) : searchResults.length > 0 ? (
-                  <FlatList
-                    data={searchResults}
-                    keyboardShouldPersistTaps="handled" // Ensure taps on results work
-                    keyExtractor={(item) => item.productName}
-                    contentContainerStyle={styles.resultContainer}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        style={styles.resultItem}
-                        onPress={() => handleSearchResultPress(item.productName)}
-                      >
-                        <Text style={styles.resultText}>{item.productName}</Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                ) : (
-                  <Text style={styles.noResultsText}>No results found</Text>
-                )}
-              </Animated.View>
-            </View>
-          )}
+            {/* Search Results */}
+            {isSearching && (
+              <View style={{ flex: 1, width: '100%' }} onStartShouldSetResponder={() => true}>
+                <Animated.View
+                  style={[
+                    styles.resultContainer,
+                    { transform: [{ translateY: animation }], maxHeight: 300 },
+                  ]}
+                >
+                  {loading ? (
+                    <Text style={styles.loadingText}>Loading...</Text>
+                  ) : searchResults.length > 0 ? (
+                    <FlatList
+                      data={searchResults}
+                      keyboardShouldPersistTaps="handled"
+                      keyExtractor={(item) => item.productName}
+                      contentContainerStyle={styles.resultListContent}
+                      renderItem={({ item }) => (
+                        <TouchableOpacity
+                          style={styles.resultItem}
+                          onPress={() => handleSearchResultPress(item.productName)}
+                        >
+                          <Text style={styles.resultText}>{item.productName}</Text>
+                        </TouchableOpacity>
+                      )}
+                    />
+                  ) : (
+                    <Text style={styles.noResultsText}>No results found</Text>
+                  )}
+                </Animated.View>
+              </View>
+            )}
+          </View>
+
+          {/* Ad Banner */}
+          <AdBanner />
         </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     backgroundColor: "#1E3932",
-    padding: 12,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 12,
   },
   main: {
     backgroundColor: "#E8F5E9",
@@ -250,6 +254,8 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     shadowOffset: { width: 0, height: 5 },
     elevation: 6,
+    width: "100%",
+    maxWidth: 600,
   },
   warning: {
     alignItems: "center",
@@ -273,13 +279,26 @@ const styles = StyleSheet.create({
     color: "#4B3621",
     marginTop: 4,
   },
+  // 🆕 NEW WRAPPER FOR ANIMATION (ONLY ONE BORDER, FIXED)
+  searchBarWrapper: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    marginBottom: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F1F8F5",
+    backgroundColor: "#FFFFFF",
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 12,
+    borderWidth: 1,
+    borderColor: "#E8F5E9",
   },
   searchInput: {
     flex: 1,
@@ -314,12 +333,17 @@ const styles = StyleSheet.create({
     color: "#00704A",
   },
   resultContainer: {
-    flex: 1,
     width: "100%",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    paddingHorizontal: 12,
     minHeight: 250,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: "#E8F5E9",
+    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+  },
+  resultListContent: {
+    paddingVertical: 4,
+    width: "85%",
   },
   resultItem: {
     width: "100%",
