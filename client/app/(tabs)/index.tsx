@@ -16,7 +16,7 @@ import { useRouter } from "expo-router";
 import { Product, fetchProductShelfLife } from "../../services/productService";
 import Constants from "expo-constants";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import AdBanner from "../../components/AdBanner";
+// import AdBanner from "../../components/AdBanner";
 
 const formatDate = (date: Date) => {
   return date.toLocaleDateString("en-US", {
@@ -226,7 +226,7 @@ export default function HomeScreen() {
           </View>
 
           {/* Ad Banner */}
-          <AdBanner />
+          {/* <AdBanner /> */}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
