@@ -5,59 +5,63 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { AppRegistry, Platform } from 'react-native';
-import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
-import { getTrackingStatus, requestTrackingPermission } from 'react-native-tracking-transparency';
+
+// app.json must use expo.name.
+import appConfig from '../app.json'; // {"expo": {...}}
+type AppJson = { expo: { name: string } };
+const appName: string = (appConfig as AppJson).expo.name;
 
 import { useColorScheme } from 'hooks/useColorScheme';
-import { name as appName } from '../app.json';
 
 SplashScreen.preventAutoHideAsync(); // Prevent splash screen from auto-hiding
 
 console.log('🔍 Starting app/_layout.tsx execution');
 
+// ⚠️ Tracking/ads initialization is not performed at all in development mode.
+// Use "dynamic import" to delay loading native modules.
 const requestTrackingPermissionIfNeeded = async () => {
-  console.log('🔍 Checking tracking status...');
+  if (__DEV__) {
+    console.log('🔧 Dev mode: skip tracking permission');
+    return;
+  }
   if (Platform.OS === 'ios') {
-    const trackingStatus = await getTrackingStatus();
-    console.log('🔍 Current tracking status:', trackingStatus);
-    if (trackingStatus === 'not-determined') {
-      const permission = await requestTrackingPermission();
-      console.log('🔍 Tracking permission result:', permission);
+    try {
+      const { getTrackingStatus, requestTrackingPermission } = await import('react-native-tracking-transparency');
+      const trackingStatus = await getTrackingStatus();
+      console.log('🔍 Current tracking status:', trackingStatus);
+      if (trackingStatus === 'not-determined') {
+        const permission = await requestTrackingPermission();
+        console.log('🔍 Tracking permission result:', permission);
+      }
+    } catch (e) {
+      console.log('ℹ️ Tracking module not available in this build:', (e as any)?.message ?? e);
     }
   }
 };
 
-mobileAds()
-  .setRequestConfiguration({
-    // Update all future requests suitable for parental guidance
-    maxAdContentRating: MaxAdContentRating.PG,
+const initMobileAdsIfNeeded = async () => {
+  if (__DEV__) {
+    console.log('🔧 Dev mode: skip mobile ads init');
+    return;
+  }
+  try {
+    // Avoid native dependencies in development mode by reading modules only from here.
+    const { default: mobileAds, MaxAdContentRating } = await import('react-native-google-mobile-ads');
 
-    // Indicates that you want your content treated as child-directed for purposes of COPPA.
-    tagForChildDirectedTreatment: true,
+    await mobileAds().setRequestConfiguration({
+      maxAdContentRating: MaxAdContentRating.PG,
+      tagForChildDirectedTreatment: true,
+      tagForUnderAgeOfConsent: true,
+      testDeviceIdentifiers: ['EMULATOR'],
+    });
 
-    // Indicates that you want the ad request to be handled in a
-    // manner suitable for users under the age of consent.
-    tagForUnderAgeOfConsent: true,
-
-    // An array of test device IDs to allow.
-    testDeviceIdentifiers: ['EMULATOR'],
-  })
-  .then(() => {
-    console.log('🔍 Request configuration set successfully');
-
-    mobileAds()
-      .initialize()
-      .then(adapterStatuses => {
-        console.log('✅ AdMob Initialized Successfully');
-        console.log('🔍 Adapter Statuses:', adapterStatuses);
-      })
-      .catch(error => {
-        console.log('❌ AdMob Initialization Failed:', error);
-      });
-  })
-  .catch(error => {
-    console.log('❌ Failed to set request configuration:', error);
-  });
+    const adapterStatuses = await mobileAds().initialize();
+    console.log('✅ AdMob Initialized Successfully');
+    console.log('🔍 Adapter Statuses:', adapterStatuses);
+  } catch (error) {
+    console.log('ℹ️ Skipping AdMob init (module unavailable in this build):', (error as any)?.message ?? error);
+  }
+};
 
 if (Platform.OS === 'web') {
   console.log('🔍 Running on web platform');
@@ -65,10 +69,12 @@ if (Platform.OS === 'web') {
   AppRegistry.runApplication(appName, { rootTag });
 } else {
   console.log('🔍 Running on native platform');
-  requestTrackingPermissionIfNeeded().finally(() => {
-    console.log('🔍 Registering component...');
-    AppRegistry.registerComponent(appName, () => RootLayout);
-  });
+  requestTrackingPermissionIfNeeded()
+    .then(() => initMobileAdsIfNeeded())
+    .finally(() => {
+      console.log('🔍 Registering component...');
+      AppRegistry.registerComponent(appName, () => RootLayout);
+    });
 }
 
 function RootLayout() {
@@ -87,7 +93,6 @@ function RootLayout() {
         await SplashScreen.hideAsync(); // Hide splash screen
       }
     }
-
     prepare();
   }, [fontsLoaded]);
 
