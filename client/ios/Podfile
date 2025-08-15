@@ -44,6 +44,9 @@ target 'sbuxsupportapp' do
     :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
   )
 
+  # Add this line to include Google Mobile Ads SDK
+  pod 'Google-Mobile-Ads-SDK'
+
   post_install do |installer|
     react_native_post_install(
       installer,
