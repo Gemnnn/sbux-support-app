@@ -10,6 +10,8 @@ import {
   Keyboard,
   Animated,
   TouchableWithoutFeedback,
+  Dimensions,
+  PixelRatio
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "expo-router";
@@ -17,6 +19,27 @@ import { Product, fetchProductShelfLife } from "../../services/productService";
 import Constants from "expo-constants";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import AdBanner from "../../components/AdBanner";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+const guidelineBaseWidth = 375;
+const guidelineBaseHeight = 812;
+
+export function wp(percent: number) {
+  return (SCREEN_WIDTH * percent) / 100;
+}
+
+export function hp(percent: number) {
+  return (SCREEN_HEIGHT * percent) / 100;
+}
+
+export function normalize(size: number) {
+  const scale = SCREEN_WIDTH / guidelineBaseWidth;
+  const newSize = size * scale;
+  return Math.round(PixelRatio.roundToNearestPixel(newSize));
+}
 
 const formatDate = (date: Date) => {
   return date.toLocaleDateString("en-US", {
@@ -53,12 +76,17 @@ export default function HomeScreen() {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false); // Keyboard state
   const [isSearching, setIsSearching] = useState<boolean>(false); // Search bar state
   const animation = useRef(new Animated.Value(0)).current; // Animation for moving search bar
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   const handleSearch = async (productName?: string) => {
     try {
       const nameToSearch = productName || searchQuery;
-      const product = await fetchProductShelfLife(nameToSearch);
+      if (!nameToSearch.trim()) return;
 
+      // Save
+      await saveRecentSearch(nameToSearch);
+
+      const product = await fetchProductShelfLife(nameToSearch);
       router.push({
         pathname: "/(tabs)/SearchResult",
         params: { data: JSON.stringify(product) },
@@ -85,7 +113,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     Animated.timing(animation, {
-      toValue: isSearching ? -250 : 0, // Move the section further up when searching
+      toValue: isSearching ? -hp(30) : 0, // Move the section further up when searching
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -103,6 +131,32 @@ export default function HomeScreen() {
       hideSubscription.remove();
     };
   }, []);
+
+  // load recent search
+  useEffect(() => {
+    const loadRecentSearches = async () => {
+      try {
+        const stored = await AsyncStorage.getItem("recentSearches");
+        if (stored) {
+          setRecentSearches(JSON.parse(stored));
+        }
+      } catch (e) {
+        console.error("Failed to load recent searches:", e);
+      }
+    };
+    loadRecentSearches();
+  }, []);
+
+  // save recent search
+  const saveRecentSearch = async (term: string) => {
+    try {
+      const newList = [term, ...recentSearches.filter(t => t !== term)].slice(0, 3);
+      setRecentSearches(newList);
+      await AsyncStorage.setItem("recentSearches", JSON.stringify(newList));
+    } catch (e) {
+      console.error("Failed to save recent search:", e);
+    }
+  };
 
   const handleBackButton = () => {
     Keyboard.dismiss(); // Close the keyboard
@@ -193,7 +247,7 @@ export default function HomeScreen() {
 
             {/* Search Results */}
             {isSearching && (
-              <View style={{ flex: 1, width: '100%' }} onStartShouldSetResponder={() => true}>
+              <View style={{ flex: 1, width: '100%' }} >
                 <Animated.View
                   style={[
                     styles.resultContainer,
@@ -223,6 +277,22 @@ export default function HomeScreen() {
                 </Animated.View>
               </View>
             )}
+
+            <Text style={styles.recentSearchTitle}>Recent Search</Text>
+            {recentSearches.length > 0 && (
+              <View style={styles.recentSearchContainer}>
+                {recentSearches.map((item, idx) => (
+                  <TouchableOpacity
+                    key={idx}
+                    style={styles.recentSearchButton}
+                    onPress={() => handleSearch(item)}
+                  >
+                    <Text style={styles.recentSearchText}>{item}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+
           </View>
 
           {/* Ad Banner */}
@@ -242,128 +312,152 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 12,
+    paddingHorizontal: wp(3),
   },
   main: {
-    backgroundColor: "#E8F5E9",
-    borderRadius: 20,
-    padding: 24,
-    marginBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderRadius: normalize(18),
+    padding: wp(5),
+    marginBottom: hp(1.2),
     shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 15,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 6,
+    shadowOpacity: 0.08,
+    shadowRadius: normalize(8),
+    shadowOffset: { width: 0, height: normalize(2) },
+    elevation: 4,
     width: "100%",
-    maxWidth: 600,
+    maxWidth: wp(90),
   },
   warning: {
-    alignItems: "center",
     textAlign: "center",
     color: "white",
-    marginBottom: 5,
-    fontSize: 10,
+    marginBottom: hp(0.3),
+    fontSize: normalize(10),
   },
   header: {
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: hp(1.2),
   },
   title: {
-    fontSize: 32,
+    fontSize: normalize(30),
     fontWeight: "bold",
     color: "#1E3932",
-    marginTop: 8,
+    marginTop: hp(0.4),
+    letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 20,
-    color: "#4B3621",
-    marginTop: 4,
+    fontSize: normalize(16),
+    color: "#5A5A5A",
+    marginTop: hp(0.3),
   },
-  // 🆕 NEW WRAPPER FOR ANIMATION (ONLY ONE BORDER, FIXED)
   searchBarWrapper: {
     backgroundColor: "#FFFFFF",
-    borderRadius: 20,
-    marginBottom: 8,
+    borderRadius: normalize(38),
+    marginBottom: hp(1),
     shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: normalize(5),
+    shadowOffset: { width: 0, height: normalize(1.5) },
     elevation: 2,
   },
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    backgroundColor: "#F8FAF9",
+    borderRadius: normalize(38),
+    paddingHorizontal: wp(3),
+    paddingVertical: hp(1),
     borderWidth: 1,
-    borderColor: "#E8F5E9",
+    borderColor: "#E3E6E4",
   },
   searchInput: {
     flex: 1,
-    fontSize: 18,
-    marginLeft: 12,
+    fontSize: normalize(15),
+    marginLeft: wp(2),
     color: "#1E3932",
   },
   card: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 20,
-    padding: 12,
-    marginBottom: 8,
+    backgroundColor: "#FAFAFA",
+    borderRadius: normalize(15),
+    padding: wp(3),
+    marginBottom: hp(1),
+    borderWidth: 1,
+    borderColor: "#EEE",
   },
   cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#1E3932",
-    marginBottom: 15,
+    fontSize: normalize(16),
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: hp(1),
   },
   dateRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 6,
+    marginBottom: hp(0.8),
   },
   label: {
-    fontSize: 20,
-    color: "#4B3621",
+    fontSize: normalize(18),
+    color: "#555",
   },
   date: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: normalize(18),
+    fontWeight: "500",
     color: "#00704A",
   },
   resultContainer: {
     width: "100%",
-    minHeight: 250,
-    paddingHorizontal: 12,
+    minHeight: hp(30),
+    paddingHorizontal: wp(3.2),
+    borderRadius: normalize(20),
+    backgroundColor: "#F8FAF9",
     borderWidth: 1,
-    borderColor: "#E8F5E9",
-    borderRadius: 20,
-    backgroundColor: "#FFFFFF",
+    borderColor: "#EEE",
   },
   resultListContent: {
-    paddingVertical: 4,
+    paddingVertical: hp(0.5),
     width: "85%",
   },
   resultItem: {
     width: "100%",
-    padding: 8,
-    marginVertical: 4,
-    borderRadius: 16,
-    backgroundColor: "#D4E9E2",
+    padding: hp(1),
+    marginVertical: hp(0.3),
+    borderRadius: normalize(10),
+    backgroundColor: "#EFF7F3",
   },
   resultText: {
-    fontSize: 18,
+    fontSize: normalize(15),
     color: "#1E3932",
   },
   loadingText: {
     textAlign: "center",
-    fontSize: 18,
+    fontSize: normalize(15),
     color: "#999",
   },
   noResultsText: {
     textAlign: "center",
-    fontSize: 18,
+    fontSize: normalize(15),
     color: "#888",
+  },
+  recentSearchTitle: {
+    fontSize: normalize(13),
+    color: "#666",
+    marginTop: hp(1),
+    marginBottom: hp(0.6),
+    fontWeight: "500",
+  },
+  recentSearchContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: wp(2),
+  },
+  recentSearchButton: {
+    backgroundColor: "#EAF4F0",
+    paddingVertical: hp(0.7),
+    paddingHorizontal: wp(2.5),
+    borderRadius: normalize(18),
+    marginBottom: hp(0.3),
+  },
+  recentSearchText: {
+    fontSize: normalize(12),
+    color: "#1E3932",
   },
 });
