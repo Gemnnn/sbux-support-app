@@ -88,7 +88,7 @@ export default function HomeScreen() {
 
       const product = await fetchProductShelfLife(nameToSearch);
       router.push({
-        pathname: "/(tabs)/SearchResult",
+        pathname: "/SearchResult",
         params: { data: JSON.stringify(product) },
       });
     } catch (error: any) {
