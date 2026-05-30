@@ -7,86 +7,81 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		23C18845DABA21EC8CE99F16 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 27A527B2D8DE41AA1048E3A9 /* PrivacyInfo.xcprivacy */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
+		8E7AE73CDBF2CE14A73FD3E0 /* libPods-sbuxsupportapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF53C28A399239E29AE49A7 /* libPods-sbuxsupportapp.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		E3570ADA3DD764F4814FB467 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F6329DBD220A5FD9DDB2E6A2 /* PrivacyInfo.xcprivacy */; };
-		EE43BA0B89CA45F8B9A1B411 /* libPods-sbuxsupportapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD41F3DCDAF975E9CAF6FD7C /* libPods-sbuxsupportapp.a */; };
-		F4678D1B2D41EE7300BF0EF3 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F4678D1A2D41EE7300BF0EF3 /* main.jsbundle */; };
-		F4678D1C2D41EE7300BF0EF3 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F4678D1A2D41EE7300BF0EF3 /* main.jsbundle */; };
-		F4BECDDD2D45EEED000AE61A /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F4BECDDC2D45EEED000AE61A /* assets */; };
-		F4BECDDE2D45EEF8000AE61A /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F4BECDDC2D45EEED000AE61A /* assets */; };
-		F4D9355B2CF436AB00141A94 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D9355A2CF436AA00141A94 /* WidgetKit.framework */; };
-		F4D9355D2CF436AB00141A94 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4D9355C2CF436AB00141A94 /* SwiftUI.framework */; };
-		F4D9356A2CF436AF00141A94 /* ShelfLifeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F4D935592CF436AA00141A94 /* ShelfLifeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		FCD27283048643E1AFBC2B8D /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B53C6BAEBB433C9E5231B1 /* noop-file.swift */; };
+		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
+		F357892B860202DF8E77AB1A /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187AF7E5768213D5C9F318FF /* ExpoModulesProvider.swift */; };
+		F4308F7E2E559D2100B8E91B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4308F7D2E559D2100B8E91B /* WidgetKit.framework */; };
+		F4308F802E559D2100B8E91B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4308F7F2E559D2100B8E91B /* SwiftUI.framework */; };
+		F4308FAF2E559EE600B8E91B /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F4308FAE2E559EE600B8E91B /* main.jsbundle */; };
+		F4308FB12E55A27200B8E91B /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F4308FB02E55A27200B8E91B /* assets */; };
+		F4B640222E58247A002EDC12 /* ShelfLifeWidgetExtension.appex in Embed App Extension */ = {isa = PBXBuildFile; fileRef = F4308F7C2E559D2100B8E91B /* ShelfLifeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F4D935682CF436AF00141A94 /* PBXContainerItemProxy */ = {
+		F445B9E92E56CC0400161E4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F4D935582CF436AA00141A94;
+			remoteGlobalIDString = F4308F7B2E559D2100B8E91B;
 			remoteInfo = ShelfLifeWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F4D9356F2CF436AF00141A94 /* Embed Foundation Extensions */ = {
+		F4F26D5C2E57B8C40052AEC8 /* Embed App Extension */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				F4D9356A2CF436AF00141A94 /* ShelfLifeWidgetExtension.appex in Embed Foundation Extensions */,
+				F4B640222E58247A002EDC12 /* ShelfLifeWidgetExtension.appex in Embed App Extension */,
 			);
-			name = "Embed Foundation Extensions";
+			name = "Embed App Extension";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		05B53C6BAEBB433C9E5231B1 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "sbuxsupportapp/noop-file.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* sbuxsupportapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sbuxsupportapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = sbuxsupportapp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = sbuxsupportapp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = sbuxsupportapp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = sbuxsupportapp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = sbuxsupportapp/main.m; sourceTree = "<group>"; };
-		A3DCB9A88D30F4EC79DFB6DF /* Pods-sbuxsupportapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sbuxsupportapp.release.xcconfig"; path = "Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp.release.xcconfig"; sourceTree = "<group>"; };
+		187AF7E5768213D5C9F318FF /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-sbuxsupportapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		27A527B2D8DE41AA1048E3A9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = sbuxsupportapp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		3CF53C28A399239E29AE49A7 /* libPods-sbuxsupportapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sbuxsupportapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = sbuxsupportapp/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		C9F1EFFB5EF2E101C1077A90 /* Pods-sbuxsupportapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sbuxsupportapp.debug.xcconfig"; path = "Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp.debug.xcconfig"; sourceTree = "<group>"; };
-		CD41F3DCDAF975E9CAF6FD7C /* libPods-sbuxsupportapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sbuxsupportapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D35522E8219FEC79D55A9A37 /* Pods-sbuxsupportapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sbuxsupportapp.debug.xcconfig"; path = "Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp.debug.xcconfig"; sourceTree = "<group>"; };
+		E12EABE6ED792D976DF0C32E /* Pods-sbuxsupportapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sbuxsupportapp.release.xcconfig"; path = "Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F4678D1A2D41EE7300BF0EF3 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		F4BECDDC2D45EEED000AE61A /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
-		F4D935592CF436AA00141A94 /* ShelfLifeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShelfLifeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4D9355A2CF436AA00141A94 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		F4D9355C2CF436AB00141A94 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		F6329DBD220A5FD9DDB2E6A2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = sbuxsupportapp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-sbuxsupportapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = sbuxsupportapp/AppDelegate.swift; sourceTree = "<group>"; };
+		F11748442D0722820044C1D9 /* sbuxsupportapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sbuxsupportapp-Bridging-Header.h"; path = "sbuxsupportapp/sbuxsupportapp-Bridging-Header.h"; sourceTree = "<group>"; };
+		F4308F7C2E559D2100B8E91B /* ShelfLifeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShelfLifeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4308F7D2E559D2100B8E91B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		F4308F7F2E559D2100B8E91B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		F4308FAE2E559EE600B8E91B /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		F4308FB02E55A27200B8E91B /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		F4F26D552E57A86E0052AEC8 /* ShelfLifeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShelfLifeWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		F4D9356B2CF436AF00141A94 /* Exceptions for "ShelfLifeWidget" folder in "ShelfLifeWidgetExtension" target */ = {
+		F4308F8C2E559D2400B8E91B /* Exceptions for "ShelfLifeWidget" folder in "ShelfLifeWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = F4D935582CF436AA00141A94 /* ShelfLifeWidgetExtension */;
+			target = F4308F7B2E559D2100B8E91B /* ShelfLifeWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		F4D9355E2CF436AB00141A94 /* ShelfLifeWidget */ = {
+		F4308F812E559D2100B8E91B /* ShelfLifeWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				F4D9356B2CF436AF00141A94 /* Exceptions for "ShelfLifeWidget" folder in "ShelfLifeWidgetExtension" target */,
+				F4308F8C2E559D2400B8E91B /* Exceptions for "ShelfLifeWidget" folder in "ShelfLifeWidgetExtension" target */,
 			);
 			path = ShelfLifeWidget;
 			sourceTree = "<group>";
@@ -98,34 +93,40 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE43BA0B89CA45F8B9A1B411 /* libPods-sbuxsupportapp.a in Frameworks */,
+				8E7AE73CDBF2CE14A73FD3E0 /* libPods-sbuxsupportapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F4D935562CF436AA00141A94 /* Frameworks */ = {
+		F4308F792E559D2100B8E91B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4D9355D2CF436AB00141A94 /* SwiftUI.framework in Frameworks */,
-				F4D9355B2CF436AB00141A94 /* WidgetKit.framework in Frameworks */,
+				F4308F802E559D2100B8E91B /* SwiftUI.framework in Frameworks */,
+				F4308F7E2E559D2100B8E91B /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		012AE21951189C2C92DD45A8 /* sbuxsupportapp */ = {
+			isa = PBXGroup;
+			children = (
+				187AF7E5768213D5C9F318FF /* ExpoModulesProvider.swift */,
+			);
+			name = sbuxsupportapp;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* sbuxsupportapp */ = {
 			isa = PBXGroup;
 			children = (
+				F11748412D0307B40044C1D9 /* AppDelegate.swift */,
+				F11748442D0722820044C1D9 /* sbuxsupportapp-Bridging-Header.h */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
-				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				05B53C6BAEBB433C9E5231B1 /* noop-file.swift */,
-				F6329DBD220A5FD9DDB2E6A2 /* PrivacyInfo.xcprivacy */,
+				27A527B2D8DE41AA1048E3A9 /* PrivacyInfo.xcprivacy */,
 			);
 			name = sbuxsupportapp;
 			sourceTree = "<group>";
@@ -134,11 +135,20 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				F4D9355A2CF436AA00141A94 /* WidgetKit.framework */,
-				F4D9355C2CF436AB00141A94 /* SwiftUI.framework */,
-				CD41F3DCDAF975E9CAF6FD7C /* libPods-sbuxsupportapp.a */,
+				3CF53C28A399239E29AE49A7 /* libPods-sbuxsupportapp.a */,
+				F4308F7D2E559D2100B8E91B /* WidgetKit.framework */,
+				F4308F7F2E559D2100B8E91B /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6299BFBDFB17A67D311E63B4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D35522E8219FEC79D55A9A37 /* Pods-sbuxsupportapp.debug.xcconfig */,
+				E12EABE6ED792D976DF0C32E /* Pods-sbuxsupportapp.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -151,15 +161,16 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				F4BECDDC2D45EEED000AE61A /* assets */,
-				F4678D1A2D41EE7300BF0EF3 /* main.jsbundle */,
+				F4F26D552E57A86E0052AEC8 /* ShelfLifeWidgetExtension.entitlements */,
+				F4308FB02E55A27200B8E91B /* assets */,
+				F4308FAE2E559EE600B8E91B /* main.jsbundle */,
 				13B07FAE1A68108700A75B9A /* sbuxsupportapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				F4D9355E2CF436AB00141A94 /* ShelfLifeWidget */,
+				F4308F812E559D2100B8E91B /* ShelfLifeWidget */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				D65327D7A22EEC0BE12398D9 /* Pods */,
-				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+				6299BFBDFB17A67D311E63B4 /* Pods */,
+				849CE05D3E151725BE00D624 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -170,17 +181,17 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* sbuxsupportapp.app */,
-				F4D935592CF436AA00141A94 /* ShelfLifeWidgetExtension.appex */,
+				F4308F7C2E559D2100B8E91B /* ShelfLifeWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		92DBD88DE9BF7D494EA9DA96 /* sbuxsupportapp */ = {
+		849CE05D3E151725BE00D624 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */,
+				012AE21951189C2C92DD45A8 /* sbuxsupportapp */,
 			);
-			name = sbuxsupportapp;
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -192,23 +203,6 @@
 			path = sbuxsupportapp/Supporting;
 			sourceTree = "<group>";
 		};
-		D65327D7A22EEC0BE12398D9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C9F1EFFB5EF2E101C1077A90 /* Pods-sbuxsupportapp.debug.xcconfig */,
-				A3DCB9A88D30F4EC79DFB6DF /* Pods-sbuxsupportapp.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				92DBD88DE9BF7D494EA9DA96 /* sbuxsupportapp */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -216,43 +210,45 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "sbuxsupportapp" */;
 			buildPhases = (
-				C75F54545CAFE6D052554984 /* [CP] Check Pods Manifest.lock */,
-				A9BF88A19DDADCAEF5624232 /* [Expo] Configure project */,
+				F4F26D5C2E57B8C40052AEC8 /* Embed App Extension */,
+				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
+				B2632D1C561D14B42D8EBDBE /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
-				13B07F8E1A680F5B00A75B9A /* Resources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				F4D9356F2CF436AF00141A94 /* Embed Foundation Extensions */,
-				C9006F21354D4238A4A8BBA6 /* [CP] Copy Pods Resources */,
+				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
+				72C8990F87FCBB5D7BA94E18 /* [CP] Embed Pods Frameworks */,
+				2531F4CD221F1493DF6643DA /* [CP-User] [RNGoogleMobileAds] Configuration */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F4D935692CF436AF00141A94 /* PBXTargetDependency */,
+				F445B9EA2E56CC0400161E4C /* PBXTargetDependency */,
 			);
 			name = sbuxsupportapp;
 			productName = sbuxsupportapp;
 			productReference = 13B07F961A680F5B00A75B9A /* sbuxsupportapp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F4D935582CF436AA00141A94 /* ShelfLifeWidgetExtension */ = {
+		F4308F7B2E559D2100B8E91B /* ShelfLifeWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4D9356C2CF436AF00141A94 /* Build configuration list for PBXNativeTarget "ShelfLifeWidgetExtension" */;
+			buildConfigurationList = F4308F8D2E559D2400B8E91B /* Build configuration list for PBXNativeTarget "ShelfLifeWidgetExtension" */;
 			buildPhases = (
-				F4D935552CF436AA00141A94 /* Sources */,
-				F4D935562CF436AA00141A94 /* Frameworks */,
-				F4D935572CF436AA00141A94 /* Resources */,
+				F4308F782E559D2100B8E91B /* Sources */,
+				F4308F792E559D2100B8E91B /* Frameworks */,
+				F4308F7A2E559D2100B8E91B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				F4D9355E2CF436AB00141A94 /* ShelfLifeWidget */,
+				F4308F812E559D2100B8E91B /* ShelfLifeWidget */,
 			);
 			name = ShelfLifeWidgetExtension;
 			productName = ShelfLifeWidgetExtension;
-			productReference = F4D935592CF436AA00141A94 /* ShelfLifeWidgetExtension.appex */;
+			productReference = F4308F7C2E559D2100B8E91B /* ShelfLifeWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -261,14 +257,14 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1610;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1250;
 					};
-					F4D935582CF436AA00141A94 = {
-						CreatedOnToolsVersion = 16.1;
+					F4308F7B2E559D2100B8E91B = {
+						CreatedOnToolsVersion = 16.2;
 					};
 				};
 			};
@@ -286,7 +282,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* sbuxsupportapp */,
-				F4D935582CF436AA00141A94 /* ShelfLifeWidgetExtension */,
+				F4308F7B2E559D2100B8E91B /* ShelfLifeWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -296,21 +292,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4BECDDD2D45EEED000AE61A /* assets in Resources */,
+				F4308FB12E55A27200B8E91B /* assets in Resources */,
+				F4308FAF2E559EE600B8E91B /* main.jsbundle in Resources */,
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				F4678D1B2D41EE7300BF0EF3 /* main.jsbundle in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				E3570ADA3DD764F4814FB467 /* PrivacyInfo.xcprivacy in Resources */,
+				23C18845DABA21EC8CE99F16 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F4D935572CF436AA00141A94 /* Resources */ = {
+		F4308F7A2E559D2100B8E91B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4BECDDE2D45EEF8000AE61A /* assets in Resources */,
-				F4678D1C2D41EE7300BF0EF3 /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,26 +326,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
 		};
-		A9BF88A19DDADCAEF5624232 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-sbuxsupportapp/expo-configure-project.sh\"\n";
-		};
-		C75F54545CAFE6D052554984 /* [CP] Check Pods Manifest.lock */ = {
+		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -373,7 +348,37 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C9006F21354D4238A4A8BBA6 /* [CP] Copy Pods Resources */ = {
+		2531F4CD221F1493DF6643DA /* [CP-User] [RNGoogleMobileAds] Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNGoogleMobileAds] Configuration";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\n\n##########################################################################\n##########################################################################\n#\n#  NOTE THAT IF YOU CHANGE THIS FILE YOU MUST RUN pod install AFTERWARDS\n#\n#  This file is installed as an Xcode build script in the project file\n#  by cocoapods, and you will not see your changes until you pod install\n#\n##########################################################################\n##########################################################################\n\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_PROJECT_ABBREVIATION=\"RNGoogleMobileAds\"\n_JSON_ROOT=\"'react-native-google-mobile-ads'\"\n_JSON_FILE_NAME='app.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n_PACKAGE_JSON_NAME='package.json'\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -KU -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> ${_PROJECT_ABBREVIATION} build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\n# Bail out if project is using Expo\n_PACKAGE_JSON_PATH=$(dirname \"${_SEARCH_RESULT}\")/${_PACKAGE_JSON_NAME}\n_IS_PROJECT_USING_EXPO=$(ruby -KU -e \"require 'json'; package=JSON.parse(File.read('${_PACKAGE_JSON_PATH}')); puts package['dependencies'].key?('expo')\")\n\nif [[ ${_IS_PROJECT_USING_EXPO} == \"true\" ]]; then\n  echo \"info: Expo project detected, assume Expo Config Plugin is used.\"\n  exit 0\nfi\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -KU -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    if ! python3 --version >/dev/null 2>&1; then echo \"python3 not found, app.json file processing error.\" && exit 1; fi\n    _JSON_OUTPUT_BASE64=$(python3 -c 'import json,sys,base64;print(base64.b64encode(bytes(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"', '\"'rb'\"').read())['${_JSON_ROOT}']), '\"'utf-8'\"')).decode())' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"google_mobile_ads_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.delay_app_measurement_init\n  _DELAY_APP_MEASUREMENT=$(getJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"delay_app_measurement_init\")\n  if [[ $_DELAY_APP_MEASUREMENT == \"true\" ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GADDelayAppMeasurementInit\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"YES\")\n  fi\n\n  # config.ios_app_id\n  _IOS_APP_ID=$(getJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"ios_app_id\")\n  if [[ $_IOS_APP_ID ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GADApplicationIdentifier\")\n    _PLIST_ENTRY_TYPES+=(\"string\")\n    _PLIST_ENTRY_VALUES+=(\"$_IOS_APP_ID\")\n  fi\n\n  # config.sk_ad_network_items\n  _SK_AD_NETWORK_ITEMS=$(getJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"sk_ad_network_items\")\n  if [[ $_SK_AD_NETWORK_ITEMS ]]; then\n    _PLIST_ENTRY_KEYS+=(\"SKAdNetworkItems\")\n    _PLIST_ENTRY_TYPES+=(\"array\")\n    _PLIST_ENTRY_VALUES+=(\"\")\n\n    oldifs=$IFS\n    IFS=\"\n\"\n    array=($(echo \"$_SK_AD_NETWORK_ITEMS\"))\n    IFS=$oldifs\n    for i in \"${!array[@]}\"; do\n      _PLIST_ENTRY_KEYS+=(\"SKAdNetworkItems:$i:SKAdNetworkIdentifier\")\n      _PLIST_ENTRY_TYPES+=(\"string\")\n      _PLIST_ENTRY_VALUES+=(\"${array[i]}\")  \n    done\n  fi\n\n    # config.user_tracking_usage_description\n  _USER_TRACKING_USAGE_DESCRIPTION=$(getJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"user_tracking_usage_description\")\n  if [[ $_USER_TRACKING_USAGE_DESCRIPTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"NSUserTrackingUsageDescription\")\n    _PLIST_ENTRY_TYPES+=(\"string\")\n    _PLIST_ENTRY_VALUES+=(\"$_USER_TRACKING_USAGE_DESCRIPTION\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"google_mobile_ads_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A ${_JSON_FILE_NAME} file was not found, whilst this file is optional it is recommended to include it to auto-configure services.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nif ! [[ -f \"${_TARGET_PLIST}\" ]]; then\n  echo \"error: unable to locate Info.plist to set properties. App will crash without GADApplicationIdentifier set.\"\n  exit 1\nfi\n\nif ! [[ $_IOS_APP_ID ]]; then\n  echo \"error: ios_app_id key not found in react-native-google-mobile-ads key in app.json. App will crash without it.\"\n  exit 1\nfi\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- ${_PROJECT_ABBREVIATION} build script finished\"\n";
+		};
+		72C8990F87FCBB5D7BA94E18 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -390,6 +395,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sbuxsupportapp/Pods-sbuxsupportapp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B2632D1C561D14B42D8EBDBE /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-sbuxsupportapp/expo-configure-project.sh\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -397,14 +421,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				FCD27283048643E1AFBC2B8D /* noop-file.swift in Sources */,
+				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
+				F357892B860202DF8E77AB1A /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F4D935552CF436AA00141A94 /* Sources */ = {
+		F4308F782E559D2100B8E91B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -414,24 +436,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F4D935692CF436AF00141A94 /* PBXTargetDependency */ = {
+		F445B9EA2E56CC0400161E4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F4D935582CF436AA00141A94 /* ShelfLifeWidgetExtension */;
-			targetProxy = F4D935682CF436AF00141A94 /* PBXContainerItemProxy */;
+			target = F4308F7B2E559D2100B8E91B /* ShelfLifeWidgetExtension */;
+			targetProxy = F445B9E92E56CC0400161E4C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9F1EFFB5EF2E101C1077A90 /* Pods-sbuxsupportapp.debug.xcconfig */;
+			baseConfigurationReference = D35522E8219FEC79D55A9A37 /* Pods-sbuxsupportapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = sbuxsupportapp/sbuxsupportapp.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XASC77A363;
 				ENABLE_BITCODE = NO;
@@ -440,12 +460,13 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = sbuxsupportapp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -454,8 +475,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.brandenmin.sbuxsupportapp;
 				PRODUCT_NAME = sbuxsupportapp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "sbuxsupportapp/sbuxsupportapp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -465,23 +486,22 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3DCB9A88D30F4EC79DFB6DF /* Pods-sbuxsupportapp.release.xcconfig */;
+			baseConfigurationReference = E12EABE6ED792D976DF0C32E /* Pods-sbuxsupportapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = sbuxsupportapp/sbuxsupportapp.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XASC77A363;
 				INFOPLIST_FILE = sbuxsupportapp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -490,8 +510,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.brandenmin.sbuxsupportapp;
 				PRODUCT_NAME = sbuxsupportapp;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "sbuxsupportapp/sbuxsupportapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -545,7 +565,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
@@ -557,8 +576,9 @@
 				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
-				USE_HERMES = false;
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -602,7 +622,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
@@ -613,12 +632,13 @@
 				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
-				USE_HERMES = false;
+				SKIP_INSTALL = YES;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		F4D9356D2CF436AF00141A94 /* Debug */ = {
+		F4308F8E2E559D2400B8E91B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -631,6 +651,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ShelfLifeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -641,7 +662,7 @@
 				INFOPLIST_FILE = ShelfLifeWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShelfLifeWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -657,14 +678,13 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		F4D9356E2CF436AF00141A94 /* Release */ = {
+		F4308F8F2E559D2400B8E91B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -677,6 +697,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ShelfLifeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -688,7 +709,7 @@
 				INFOPLIST_FILE = ShelfLifeWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShelfLifeWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -703,7 +724,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -730,11 +750,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4D9356C2CF436AF00141A94 /* Build configuration list for PBXNativeTarget "ShelfLifeWidgetExtension" */ = {
+		F4308F8D2E559D2400B8E91B /* Build configuration list for PBXNativeTarget "ShelfLifeWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F4D9356D2CF436AF00141A94 /* Debug */,
-				F4D9356E2CF436AF00141A94 /* Release */,
+				F4308F8E2E559D2400B8E91B /* Debug */,
+				F4308F8F2E559D2400B8E91B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

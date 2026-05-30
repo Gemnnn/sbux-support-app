@@ -4,15 +4,10 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "app/*"
-      ],
-      "services/*": [
-        "services/*"
-      ],
-      "@env": [
-        "types/env.d.ts"
-      ]
+      "@/*": ["app/*"],
+      "services/*": ["services/*"],
+      "@env": ["types/env.d.ts"],
+      "assets/*": ["assets/*"]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true

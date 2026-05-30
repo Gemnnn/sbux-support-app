@@ -1,0 +1,29 @@
+.
+├── .config
+│   └── dotnet-tools.json
+├── Controllers
+│   ├── ProductController.cs
+│   └── WeatherForecastController.cs
+├── Data
+│   └── ProductDbContext.cs
+├── Migrations
+│   ├── 20241210042919_InitialCreate.Designer.cs
+│   ├── 20241210042919_InitialCreate.cs
+│   └── ProductDbContextModelSnapshot.cs
+├── Models
+│   └── Product.cs
+├── Program.cs
+├── Repositories
+│   ├── IProductRepository.cs
+│   └── ProductRepository.cs
+├── Services
+│   ├── IProductService.cs
+│   └── ProductService.cs
+├── WeatherForecast.cs
+├── server.csproj
+├── server.csproj.user
+├── server.http
+├── server.sln
+└── structure-server.txt
+
+8 directories, 19 files
