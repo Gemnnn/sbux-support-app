@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using server.Repositories;
 using server.Models;
 
@@ -7,10 +8,17 @@ namespace server.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly ISearchRankingService _searchRankingService;
+        private readonly ILogger<ProductService> _logger;
 
-        public ProductService(IProductRepository productRepository)
+        public ProductService(
+            IProductRepository productRepository,
+            ISearchRankingService searchRankingService,
+            ILogger<ProductService> logger)
         {
             _productRepository = productRepository;
+            _searchRankingService = searchRankingService;
+            _logger = logger;
         }
 
         public async Task<object> GetProductShelfLifeAsync(string name, string timeZone)
@@ -46,7 +54,7 @@ namespace server.Services
                 throw new ArgumentException($"Invalid time zone: {timeZone}");
             }
 
-            return new
+            var response = new
             {
                 ProductName = product.ProductName,
                 ShelfLifeDays = product.ShelfLifeDays,
@@ -58,6 +66,17 @@ namespace server.Services
                     Time = adjustedExpirationDate.ToString("hh:mm tt")
                 }
             };
+
+            try
+            {
+                await _searchRankingService.RecordSuccessfulSearchAsync(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to record search log for product {ProductId}", product.ProductId);
+            }
+
+            return response;
         }
 
         // handle GMT and GMT-offset formats.

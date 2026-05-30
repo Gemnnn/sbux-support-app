@@ -61,7 +61,9 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
 
 // Register repositories and services
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ISearchLogRepository, SearchLogRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ISearchRankingService, SearchRankingService>();
 
 // === Configure Kestrel dynamically based on the environment ===
 builder.WebHost.ConfigureKestrel(options =>
