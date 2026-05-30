@@ -50,6 +50,29 @@ target 'sbuxsupportapp' do
       :ccache_enabled => podfile_properties['apple.ccacheEnabled'] == 'true',
     )
 
+    # Xcode's newer Clang can reject fmt 11/RCT-Folly compile-time format
+    # checks with "Call to consteval function ... is not a constant expression".
+    # Keep format handling at runtime for Pods so native iOS builds remain stable.
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        definitions = config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] || ['$(inherited)']
+        definitions = [definitions] unless definitions.is_a?(Array)
+        definitions << 'FMT_USE_CONSTEVAL=0' unless definitions.include?('FMT_USE_CONSTEVAL=0')
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] = definitions
+      end
+    end
+
+    fmt_base_header = File.join(__dir__, 'Pods', 'fmt', 'include', 'fmt', 'base.h')
+    if File.exist?(fmt_base_header)
+      File.chmod(0o644, fmt_base_header)
+      contents = File.read(fmt_base_header)
+      contents.sub!(
+        "#if !defined(__cpp_lib_is_constant_evaluated)\n",
+        "#if defined(FMT_USE_CONSTEVAL)\n// Use the provided definition.\n#elif !defined(__cpp_lib_is_constant_evaluated)\n"
+      )
+      File.write(fmt_base_header, contents)
+    end
+
     # This is necessary for Xcode 14, because it signs resource bundles by default
     # when building for devices.
     installer.target_installation_results.pod_target_installation_results
