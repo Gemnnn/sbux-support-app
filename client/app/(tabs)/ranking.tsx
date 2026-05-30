@@ -164,7 +164,7 @@ export default function RankingScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={styles.header}>
-          <MaterialCommunityIcons name="trophy-award" size={42} color="#CBA258" />
+          <MaterialCommunityIcons name="trophy" size={42} color="#CBA258" />
           <Text style={styles.title}>WEEKLY RANKING</Text>
           <Text style={styles.subtitle}>Top searched products from the last 7 days</Text>
         </View>
