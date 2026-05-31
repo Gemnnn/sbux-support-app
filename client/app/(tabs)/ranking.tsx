@@ -57,6 +57,26 @@ const renderTrendIndicator = (trendValue?: RankingItem['trend']) => {
   return <Text style={[styles.trendSymbol, styles.trendSame]}>—</Text>;
 };
 
+const getRankBadgeStyle = (rank: number) => {
+  if (rank === 1) {
+    return styles.rankBadgeGold;
+  }
+
+  if (rank === 2) {
+    return styles.rankBadgeSilver;
+  }
+
+  if (rank === 3) {
+    return styles.rankBadgeBronze;
+  }
+
+  return styles.rankBadgeGray;
+};
+
+const getRankTextStyle = (rank: number) => {
+  return rank <= 3 ? styles.rankTextDark : styles.rankTextMuted;
+};
+
 const fetchWeeklyRanking = async (): Promise<RankingItem[]> => {
   if (!BASE_URL) {
     throw new Error('BASE_URL is not configured.');
@@ -173,8 +193,8 @@ export default function RankingScreen() {
               disabled={Boolean(selectedProduct)}
             >
               <View style={styles.trendIndicator}>{renderTrendIndicator(item.trend)}</View>
-              <View style={styles.rankBadge}>
-                <Text style={styles.rankText}>{item.rank}</Text>
+              <View style={[styles.rankBadge, getRankBadgeStyle(item.rank)]}>
+                <Text style={[styles.rankText, getRankTextStyle(item.rank)]}>{item.rank}</Text>
               </View>
               <View style={styles.productInfo}>
                 <Text style={styles.productName} numberOfLines={2}>
@@ -317,13 +337,29 @@ const styles = StyleSheet.create({
     borderRadius: 19,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#00704A',
     marginRight: 12,
   },
+  rankBadgeGold: {
+    backgroundColor: '#D9A441',
+  },
+  rankBadgeSilver: {
+    backgroundColor: '#C7CCD1',
+  },
+  rankBadgeBronze: {
+    backgroundColor: '#B87945',
+  },
+  rankBadgeGray: {
+    backgroundColor: '#E7ECE9',
+  },
   rankText: {
-    color: '#FFFFFF',
     fontSize: 17,
     fontWeight: 'bold',
+  },
+  rankTextDark: {
+    color: '#1E3932',
+  },
+  rankTextMuted: {
+    color: '#687076',
   },
   productInfo: {
     flex: 1,
