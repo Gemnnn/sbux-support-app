@@ -3,50 +3,40 @@ import React from 'react';
 
 
 import { TabBarIcon } from 'components/navigation/TabBarIcon';
-import { Colors } from 'constants/Colors';
-import { useColorScheme } from 'hooks/useColorScheme';
-import { Stack } from "expo-router";
 
 export default function TabLayout() {
-  // const colorScheme = useColorScheme();
-
   return (
-    
-    // With Navigation Tab
-    
-    // <Tabs
-    //   screenOptions={{
-    //     tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-    //     headerShown: false,
-    //   }}>
-    //   <Tabs.Screen
-    //     name="index"
-    //     options={{
-    //       title: 'Home',
-    //       tabBarIcon: ({ color, focused }) => (
-    //         <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-    //       ),
-    //     }}
-    //   />
-    //   <Tabs.Screen
-    //     name="explore"
-    //     options={{
-    //       title: 'Explore',
-    //       tabBarIcon: ({ color, focused }) => (
-    //         <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-    //       ),
-    //     }}
-    //   />
-    // </Tabs>
-
-  // Stack Navigation
-  <Stack
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <Stack.Screen name="index" />
-  </Stack>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: '#00704A',
+        tabBarInactiveTintColor: '#687076',
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF',
+          borderTopColor: '#E3E6E4',
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Search',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="ranking"
+        options={{
+          title: 'Ranking',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'trophy' : 'trophy-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen name="SearchResult" options={{ href: null }} />
+      <Tabs.Screen name="explore" options={{ href: null }} />
+    </Tabs>
   );
-  
 }

@@ -22,9 +22,49 @@ namespace server.Services
         public async Task<IReadOnlyList<SearchRankingItem>> GetWeeklyRankingAsync(int take)
         {
             var safeTake = take <= 0 ? DefaultTake : Math.Min(take, MaxTake);
-            var sinceUtc = DateTime.UtcNow.AddDays(-7);
+            var nowUtc = DateTime.UtcNow;
+            var currentSinceUtc = nowUtc.AddDays(-7);
+            var previousSinceUtc = nowUtc.AddDays(-14);
 
-            return await _searchLogRepository.GetTopSearchesAsync(sinceUtc, safeTake);
+            var currentRanking = await _searchLogRepository.GetTopSearchesAsync(currentSinceUtc, nowUtc, safeTake);
+            if (currentRanking.Count == 0)
+            {
+                return currentRanking;
+            }
+
+            var previousRanking = await _searchLogRepository.GetTopSearchesAsync(previousSinceUtc, currentSinceUtc);
+            var previousRanksByProduct = previousRanking
+                .GroupBy(item => item.NormalizedProductName)
+                .ToDictionary(group => group.Key, group => group.First().Rank);
+
+            foreach (var item in currentRanking)
+            {
+                if (!previousRanksByProduct.TryGetValue(item.NormalizedProductName, out var previousRank))
+                {
+                    item.PreviousRank = null;
+                    item.RankChange = null;
+                    item.Trend = "new";
+                    continue;
+                }
+
+                item.PreviousRank = previousRank;
+                item.RankChange = previousRank - item.Rank;
+
+                if (item.Rank < previousRank)
+                {
+                    item.Trend = "up";
+                }
+                else if (item.Rank == previousRank)
+                {
+                    item.Trend = "same";
+                }
+                else
+                {
+                    item.Trend = "down";
+                }
+            }
+
+            return currentRanking;
         }
     }
 }

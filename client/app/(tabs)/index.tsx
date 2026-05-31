@@ -59,7 +59,7 @@ const getExpireDate = (days: number) => {
 const fetchProductData = async (query: string): Promise<Product[]> => {
   try {
     const response = await fetch(
-      `${Constants.expoConfig?.extra?.BASE_URL}/api/Product/search?query=${query}`
+      `${Constants.expoConfig?.extra?.BASE_URL}/api/Product/search?query=${encodeURIComponent(query)}`
     );
     return await response.json();
   } catch (error) {
@@ -76,6 +76,8 @@ export default function HomeScreen() {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false); // Keyboard state
   const [isSearching, setIsSearching] = useState<boolean>(false); // Search bar state
   const animation = useRef(new Animated.Value(0)).current; // Animation for moving search bar
+  const searchRequestId = useRef(0);
+  const autocompleteCache = useRef<Record<string, Product[]>>({});
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   const handleSearch = async (productName?: string) => {
@@ -88,7 +90,7 @@ export default function HomeScreen() {
 
       const product = await fetchProductShelfLife(nameToSearch);
       router.push({
-        pathname: "/(tabs)/SearchResult",
+        pathname: "/SearchResult",
         params: { data: JSON.stringify(product) },
       });
     } catch (error: any) {
@@ -99,12 +101,30 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const fetchResults = async () => {
-      if (searchQuery.trim() === "") {
+      const trimmedQuery = searchQuery.trim();
+      const requestId = ++searchRequestId.current;
+
+      if (trimmedQuery === "") {
         setSearchResults([]);
+        setLoading(false);
         return;
       }
+
+      const cachedResults = autocompleteCache.current[trimmedQuery];
+      if (cachedResults) {
+        setSearchResults(cachedResults);
+        setLoading(false);
+        return;
+      }
+
       setLoading(true);
-      const results = await fetchProductData(searchQuery);
+      const results = await fetchProductData(trimmedQuery);
+      autocompleteCache.current[trimmedQuery] = results;
+
+      if (requestId !== searchRequestId.current) {
+        return;
+      }
+
       setSearchResults(results);
       setLoading(false);
     };
