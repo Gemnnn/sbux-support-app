@@ -28,28 +28,32 @@ namespace server.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyList<SearchRankingItem>> GetTopSearchesAsync(DateTime sinceUtc, int take)
+        public async Task<IReadOnlyList<SearchRankingItem>> GetTopSearchesAsync(DateTime sinceUtc, DateTime untilUtc, int? take = null)
         {
-            var groupedResults = await _context.SearchLogs
+            var query = _context.SearchLogs
                 .AsNoTracking()
-                .Where(log => log.SearchedAtUtc >= sinceUtc)
+                .Where(log => log.SearchedAtUtc >= sinceUtc && log.SearchedAtUtc < untilUtc)
                 .GroupBy(log => new { log.NormalizedProductName, log.ProductName })
                 .Select(group => new
                 {
+                    group.Key.NormalizedProductName,
                     group.Key.ProductName,
                     Count = group.Count()
                 })
                 .OrderByDescending(item => item.Count)
-                .ThenBy(item => item.ProductName)
-                .Take(take)
-                .ToListAsync();
+                .ThenBy(item => item.ProductName);
+
+            var groupedResults = take.HasValue
+                ? await query.Take(take.Value).ToListAsync()
+                : await query.ToListAsync();
 
             return groupedResults
                 .Select((item, index) => new SearchRankingItem
                 {
                     Rank = index + 1,
                     ProductName = item.ProductName,
-                    Count = item.Count
+                    Count = item.Count,
+                    NormalizedProductName = item.NormalizedProductName
                 })
                 .ToList();
         }

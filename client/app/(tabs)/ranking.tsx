@@ -20,9 +20,42 @@ type RankingItem = {
   rank: number;
   productName: string;
   count: number;
+  previousRank?: number | null;
+  rankChange?: number | null;
+  trend?: 'up' | 'same' | 'down' | 'new' | string | null;
 };
 
 const BASE_URL = Constants.expoConfig?.extra?.BASE_URL;
+
+const normalizeTrend = (trend?: RankingItem['trend']) => {
+  if (trend === 'up' || trend === 'same' || trend === 'down' || trend === 'new') {
+    return trend;
+  }
+
+  return 'new';
+};
+
+const renderTrendIndicator = (trendValue?: RankingItem['trend']) => {
+  const trend = normalizeTrend(trendValue);
+
+  if (trend === 'new') {
+    return (
+      <View style={styles.newBadge}>
+        <Text style={styles.newBadgeText}>NEW</Text>
+      </View>
+    );
+  }
+
+  if (trend === 'up') {
+    return <Text style={[styles.trendSymbol, styles.trendUp]}>▲</Text>;
+  }
+
+  if (trend === 'down') {
+    return <Text style={[styles.trendSymbol, styles.trendDown]}>▼</Text>;
+  }
+
+  return <Text style={[styles.trendSymbol, styles.trendSame]}>—</Text>;
+};
 
 const fetchWeeklyRanking = async (): Promise<RankingItem[]> => {
   if (!BASE_URL) {
@@ -139,6 +172,7 @@ export default function RankingScreen() {
               activeOpacity={0.8}
               disabled={Boolean(selectedProduct)}
             >
+              <View style={styles.trendIndicator}>{renderTrendIndicator(item.trend)}</View>
               <View style={styles.rankBadge}>
                 <Text style={styles.rankText}>{item.rank}</Text>
               </View>
@@ -146,13 +180,22 @@ export default function RankingScreen() {
                 <Text style={styles.productName} numberOfLines={2}>
                   {item.productName}
                 </Text>
-                <Text style={styles.countText}>{item.count.toLocaleString()} searches</Text>
               </View>
-              {isOpening ? (
-                <ActivityIndicator color="#00704A" />
-              ) : (
-                <Ionicons name="chevron-forward" size={20} color="#687076" />
-              )}
+              <View style={styles.countColumn}>
+                <Text style={styles.countText} numberOfLines={1}>
+                  {item.count.toLocaleString()}
+                </Text>
+                <Text style={styles.countLabel} numberOfLines={1}>
+                  searches
+                </Text>
+              </View>
+              <View style={styles.actionIndicator}>
+                {isOpening ? (
+                  <ActivityIndicator color="#00704A" size="small" />
+                ) : (
+                  <Ionicons name="chevron-forward" size={18} color="#687076" />
+                )}
+              </View>
             </TouchableOpacity>
           );
         }}
@@ -232,6 +275,42 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 10,
   },
+  trendIndicator: {
+    width: 34,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 6,
+  },
+  trendSymbol: {
+    fontSize: 16,
+    fontWeight: '800',
+    lineHeight: 18,
+    textAlign: 'center',
+  },
+  trendUp: {
+    color: '#00704A',
+  },
+  trendSame: {
+    color: '#687076',
+  },
+  trendDown: {
+    color: '#C62828',
+  },
+  newBadge: {
+    width: 32,
+    height: 18,
+    borderRadius: 9,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#EAF4F0',
+    borderWidth: 1,
+    borderColor: '#B7D7C8',
+  },
+  newBadgeText: {
+    color: '#00704A',
+    fontSize: 9,
+    fontWeight: '800',
+  },
   rankBadge: {
     width: 38,
     height: 38,
@@ -258,9 +337,27 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   countText: {
+    color: '#1E3932',
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'right',
+  },
+  countLabel: {
     color: '#687076',
-    fontSize: 13,
-    marginTop: 4,
+    fontSize: 11,
+    marginTop: 2,
+    textAlign: 'right',
+  },
+  countColumn: {
+    width: 70,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  actionIndicator: {
+    width: 20,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginLeft: 4,
   },
   stateContainer: {
     flex: 1,
