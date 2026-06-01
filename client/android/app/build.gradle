@@ -3,6 +3,20 @@ apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
+def signingProperties = new Properties()
+def signingPropertiesFile = rootProject.file("signing.properties")
+if (signingPropertiesFile.exists()) {
+    signingPropertiesFile.withInputStream { signingProperties.load(it) }
+}
+
+def requestedReleaseBuild = gradle.startParameter.taskNames.any { it.toLowerCase().contains("release") }
+def releaseSigningValue = { name ->
+    def value = signingProperties.getProperty(name) ?: System.getenv(name)
+    if (requestedReleaseBuild && !value) {
+        throw new GradleException("Missing Android release signing value '${name}'. Add it to client/android/signing.properties or set it as an environment variable.")
+    }
+    return value ?: ""
+}
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -14,6 +28,7 @@ react {
     hermesCommand = new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim()).getParentFile().getAbsolutePath() + "/sdks/hermesc/%OS-BIN%/hermesc"
     codegenDir = new File(["node", "--print", "require.resolve('@react-native/codegen/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile().getAbsoluteFile()
 
+    enableBundleCompression = (findProperty('android.enableBundleCompression') ?: false).toBoolean()
     // Use Expo CLI to bundle the app, this ensures the Metro config
     // works correctly with Expo projects.
     cliFile = new File(["node", "--print", "require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })"].execute(null, rootDir).text.trim())
@@ -78,7 +93,7 @@ def enableProguardInReleaseBuilds = (findProperty('android.enableProguardInRelea
  * give correct results when using with locales other than en-US. Note that
  * this variant is about 6MiB larger per architecture than default.
  */
-def jscFlavor = 'org.webkit:android-jsc:+'
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -91,8 +106,8 @@ android {
         applicationId 'com.brandenmin.sbuxsupportapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 13
+        versionName "1.7"
     }
     signingConfigs {
         debug {
@@ -100,6 +115,13 @@ android {
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
+        }
+        release {
+            def uploadStoreFile = releaseSigningValue("MYAPP_UPLOAD_STORE_FILE")
+            storeFile uploadStoreFile ? file(uploadStoreFile) : file("missing-release-signing-key.jks")
+            keyAlias releaseSigningValue("MYAPP_UPLOAD_KEY_ALIAS")
+            storePassword releaseSigningValue("MYAPP_UPLOAD_STORE_PASSWORD")
+            keyPassword releaseSigningValue("MYAPP_UPLOAD_KEY_PASSWORD")
         }
     }
     buildTypes {
@@ -109,7 +131,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -159,15 +181,15 @@ dependencies {
 
     if (isGifEnabled) {
         // For animated gif support
-        implementation("com.facebook.fresco:animated-gif:${reactAndroidLibs.versions.fresco.get()}")
+        implementation("com.facebook.fresco:animated-gif:${expoLibs.versions.fresco.get()}")
     }
 
     if (isWebpEnabled) {
         // For webp support
-        implementation("com.facebook.fresco:webpsupport:${reactAndroidLibs.versions.fresco.get()}")
+        implementation("com.facebook.fresco:webpsupport:${expoLibs.versions.fresco.get()}")
         if (isWebpAnimatedEnabled) {
             // Animated webp support
-            implementation("com.facebook.fresco:animated-webp:${reactAndroidLibs.versions.fresco.get()}")
+            implementation("com.facebook.fresco:animated-webp:${expoLibs.versions.fresco.get()}")
         }
     }
 
