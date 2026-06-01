@@ -51,7 +51,9 @@ android/.gradle/
 android/build/
 android/app/build/
 android/local.properties
-android/app/proguard-rules.pro
+android/signing.properties
+android/release-signing.properties
+android/app/signing.properties
 
 # Temporary and build artifacts
 .expo-shared/
@@ -91,6 +93,7 @@ expo-env.d.ts
 # Native
 *.orig.*
 *.jks
+*.keystore
 *.p8
 *.p12
 *.key
