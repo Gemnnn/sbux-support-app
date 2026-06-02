@@ -217,106 +217,110 @@ export default function HomeScreen() {
         accessible={false}
       >
         <View style={styles.contentContainer}>
-          <Text style={styles.warning}>This is an unofficial resource and is not sponsored by any companies.</Text>
-          <View style={styles.main}>
-            {/* Header */}
-            <View style={styles.header}>
-              <MaterialCommunityIcons name="coffee" size={48} color="#00704A" />
-              <Text style={styles.title}>DATE DOTTER</Text>
-              <Text style={styles.subtitle}>☕ Today: {today}</Text>
-            </View>
-
-            {/* Expiry Dates */}
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>📅 Expiry Dates</Text>
-              {dates.map((item, index) => (
-                <View key={index} style={styles.dateRow}>
-                  <Text style={styles.label}>{item.label}</Text>
-                  <Text style={styles.date}>{item.date}</Text>
-                </View>
-              ))}
-            </View>
-
-            {/* 🔧 UPDATED: SearchBar no longer uses `card`, no duplicate border */}
-            <Animated.View style={[styles.searchBarWrapper, { transform: [{ translateY: animation }] }]}>
-              <View style={styles.searchBar}>
-                {isSearching ? (
-                  <TouchableOpacity onPress={handleBackButton}>
-                    <Ionicons name="arrow-back" size={20} color="#888" />
-                  </TouchableOpacity>
-                ) : (
-                  <Ionicons name="search" size={20} color="#888" />
-                )}
-                <TextInput
-                  style={styles.searchInput}
-                  placeholder="Search for products..."
-                  placeholderTextColor="#888"
-                  value={searchQuery}
-                  onChangeText={(text) => setSearchQuery(text)}
-                  onFocus={() => {
-                    setIsSearching(true); // 🔧 UPDATED: only toggle search state
-                  }}
-                />
-                {searchQuery.trim() !== "" && (
-                  <TouchableOpacity onPress={() => setSearchQuery("")}>
-                    <Ionicons name="close-circle" size={20} color="#888" />
-                  </TouchableOpacity>
-                )}
+          <View style={styles.centerContent}>
+            <Text style={styles.warning}>This is an unofficial resource and is not sponsored by any companies.</Text>
+            <View style={styles.main}>
+              {/* Header */}
+              <View style={styles.header}>
+                <MaterialCommunityIcons name="coffee" size={48} color="#00704A" />
+                <Text style={styles.title}>DATE DOTTER</Text>
+                <Text style={styles.subtitle}>☕ Today: {today}</Text>
               </View>
-            </Animated.View>
 
-            {/* Search Results */}
-            {isSearching && (
-              <View style={{ flex: 1, width: '100%' }} >
-                <Animated.View
-                  style={[
-                    styles.resultContainer,
-                    { transform: [{ translateY: animation }], maxHeight: 300 },
-                  ]}
-                >
-                  {loading ? (
-                    <Text style={styles.loadingText}>Loading...</Text>
-                  ) : searchResults.length > 0 ? (
-                    <FlatList
-                      data={searchResults}
-                      keyboardShouldPersistTaps="handled"
-                      keyExtractor={(item) => item.productName}
-                      contentContainerStyle={styles.resultListContent}
-                      renderItem={({ item }) => (
-                        <TouchableOpacity
-                          style={styles.resultItem}
-                          onPress={() => handleSearchResultPress(item.productName)}
-                        >
-                          <Text style={styles.resultText}>{item.productName}</Text>
-                        </TouchableOpacity>
-                      )}
-                    />
-                  ) : (
-                    <Text style={styles.noResultsText}>No results found</Text>
-                  )}
-                </Animated.View>
-              </View>
-            )}
-
-            <Text style={styles.recentSearchTitle}>Recent Search</Text>
-            {recentSearches.length > 0 && (
-              <View style={styles.recentSearchContainer}>
-                {recentSearches.map((item, idx) => (
-                  <TouchableOpacity
-                    key={idx}
-                    style={styles.recentSearchButton}
-                    onPress={() => handleSearch(item)}
-                  >
-                    <Text style={styles.recentSearchText}>{item}</Text>
-                  </TouchableOpacity>
+              {/* Expiry Dates */}
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>📅 Expiry Dates</Text>
+                {dates.map((item, index) => (
+                  <View key={index} style={styles.dateRow}>
+                    <Text style={styles.label}>{item.label}</Text>
+                    <Text style={styles.date}>{item.date}</Text>
+                  </View>
                 ))}
               </View>
-            )}
 
+              {/* 🔧 UPDATED: SearchBar no longer uses `card`, no duplicate border */}
+              <Animated.View style={[styles.searchBarWrapper, { transform: [{ translateY: animation }] }]}>
+                <View style={styles.searchBar}>
+                  {isSearching ? (
+                    <TouchableOpacity onPress={handleBackButton}>
+                      <Ionicons name="arrow-back" size={20} color="#888" />
+                    </TouchableOpacity>
+                  ) : (
+                    <Ionicons name="search" size={20} color="#888" />
+                  )}
+                  <TextInput
+                    style={styles.searchInput}
+                    placeholder="Search for products..."
+                    placeholderTextColor="#888"
+                    value={searchQuery}
+                    onChangeText={(text) => setSearchQuery(text)}
+                    onFocus={() => {
+                      setIsSearching(true); // 🔧 UPDATED: only toggle search state
+                    }}
+                  />
+                  {searchQuery.trim() !== "" && (
+                    <TouchableOpacity onPress={() => setSearchQuery("")}>
+                      <Ionicons name="close-circle" size={20} color="#888" />
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </Animated.View>
+
+              {/* Search Results */}
+              {isSearching && (
+                <View style={{ flex: 1, width: '100%' }} >
+                  <Animated.View
+                    style={[
+                      styles.resultContainer,
+                      { transform: [{ translateY: animation }], maxHeight: 300 },
+                    ]}
+                  >
+                    {loading ? (
+                      <Text style={styles.loadingText}>Loading...</Text>
+                    ) : searchResults.length > 0 ? (
+                      <FlatList
+                        data={searchResults}
+                        keyboardShouldPersistTaps="handled"
+                        keyExtractor={(item) => item.productName}
+                        contentContainerStyle={styles.resultListContent}
+                        renderItem={({ item }) => (
+                          <TouchableOpacity
+                            style={styles.resultItem}
+                            onPress={() => handleSearchResultPress(item.productName)}
+                          >
+                            <Text style={styles.resultText}>{item.productName}</Text>
+                          </TouchableOpacity>
+                        )}
+                      />
+                    ) : (
+                      <Text style={styles.noResultsText}>No results found</Text>
+                    )}
+                  </Animated.View>
+                </View>
+              )}
+
+              <Text style={styles.recentSearchTitle}>Recent Search</Text>
+              {recentSearches.length > 0 && (
+                <View style={styles.recentSearchContainer}>
+                  {recentSearches.map((item, idx) => (
+                    <TouchableOpacity
+                      key={idx}
+                      style={styles.recentSearchButton}
+                      onPress={() => handleSearch(item)}
+                    >
+                      <Text style={styles.recentSearchText}>{item}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
+
+            </View>
           </View>
 
           {/* Ad Banner */}
-          <AdBanner />
+          <View style={styles.adContainer}>
+            <AdBanner />
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -329,10 +333,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#1E3932",
   },
   contentContainer: {
-    flexGrow: 1,
-    justifyContent: "center",
+    flex: 1,
     alignItems: "center",
     paddingHorizontal: wp(3),
+  },
+  centerContent: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   main: {
     backgroundColor: "#FFFFFF",
@@ -346,6 +355,15 @@ const styles = StyleSheet.create({
     elevation: 4,
     width: "100%",
     maxWidth: wp(90),
+  },
+  adContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 8,
+    alignItems: "center",
+    marginTop: 8,
+    minHeight: 54,
   },
   warning: {
     textAlign: "center",
