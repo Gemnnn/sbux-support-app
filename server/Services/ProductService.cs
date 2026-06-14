@@ -30,24 +30,13 @@ namespace server.Services
                 throw new KeyNotFoundException($"Product '{name}' not found.");
             }
 
-            // Calculate expiration date in UTC
-            var expirationDateUtc = DateTime.UtcNow.AddDays(product.ShelfLifeDays);
-
-            // Convert to specified time zone
             DateTime adjustedExpirationDate;
             try
             {
-                // Handle GMT offsets like "GMT-5" or "GMT+1"
-                if (timeZone.StartsWith("GMT", StringComparison.OrdinalIgnoreCase))
-                {
-                    adjustedExpirationDate = ConvertFromGmtOffset(timeZone, expirationDateUtc);
-                }
-                else
-                {
-                    // Handle standard Windows time zones
-                    var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-                    adjustedExpirationDate = TimeZoneInfo.ConvertTimeFromUtc(expirationDateUtc, userTimeZone);
-                }
+                adjustedExpirationDate = CalculateExpirationDate(
+                    DateTime.UtcNow,
+                    product.ShelfLifeDays,
+                    timeZone);
             }
             catch (TimeZoneNotFoundException)
             {
@@ -79,8 +68,29 @@ namespace server.Services
             return response;
         }
 
+        private static DateTime CalculateExpirationDate(
+            DateTime utcNow,
+            int shelfLifeDays,
+            string timeZone)
+        {
+            if (timeZone.StartsWith("GMT", StringComparison.OrdinalIgnoreCase))
+            {
+                var localNow = ConvertFromGmtOffset(timeZone, utcNow);
+                return shelfLifeDays == 30
+                    ? localNow.AddMonths(1)
+                    : ConvertFromGmtOffset(timeZone, utcNow.AddDays(shelfLifeDays));
+            }
+
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+            var currentLocalDateTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, userTimeZone);
+
+            return shelfLifeDays == 30
+                ? currentLocalDateTime.AddMonths(1)
+                : TimeZoneInfo.ConvertTimeFromUtc(utcNow.AddDays(shelfLifeDays), userTimeZone);
+        }
+
         // handle GMT and GMT-offset formats.
-        private DateTime ConvertFromGmtOffset(string gmtOffset, DateTime utcDateTime)
+        private static DateTime ConvertFromGmtOffset(string gmtOffset, DateTime utcDateTime)
         {
             // Extract offset from "GMT±x" format
             if (gmtOffset.Length < 4 || !gmtOffset.StartsWith("GMT", StringComparison.OrdinalIgnoreCase))

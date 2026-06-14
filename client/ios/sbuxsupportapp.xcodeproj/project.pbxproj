@@ -18,6 +18,9 @@
 		F4308F802E559D2100B8E91B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4308F7F2E559D2100B8E91B /* SwiftUI.framework */; };
 		F4308FB12E55A27200B8E91B /* assets in Resources */ = {isa = PBXBuildFile; fileRef = F4308FB02E55A27200B8E91B /* assets */; };
 		F4B640222E58247A002EDC12 /* ShelfLifeWidgetExtension.appex in Embed App Extension */ = {isa = PBXBuildFile; fileRef = F4308F7C2E559D2100B8E91B /* ShelfLifeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F4C80A1A2EDE100000000001 /* ShelfLifeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C80A102EDE100000000001 /* ShelfLifeWidget.swift */; };
+		F4C80A1B2EDE100000000001 /* ShelfLifeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C80A112EDE100000000001 /* ShelfLifeWidgetBundle.swift */; };
+		F4C80A1C2EDE100000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4C80A122EDE100000000001 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,28 +66,11 @@
 		F4308F7F2E559D2100B8E91B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		F4308FB02E55A27200B8E91B /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		F4F26D552E57A86E0052AEC8 /* ShelfLifeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShelfLifeWidgetExtension.entitlements; sourceTree = "<group>"; };
+		F4C80A102EDE100000000001 /* ShelfLifeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfLifeWidget.swift; sourceTree = "<group>"; };
+		F4C80A112EDE100000000001 /* ShelfLifeWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfLifeWidgetBundle.swift; sourceTree = "<group>"; };
+		F4C80A122EDE100000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F4C80A132EDE100000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		F4308F8C2E559D2400B8E91B /* Exceptions for "ShelfLifeWidget" folder in "ShelfLifeWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = F4308F7B2E559D2100B8E91B /* ShelfLifeWidgetExtension */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		F4308F812E559D2100B8E91B /* ShelfLifeWidget */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				F4308F8C2E559D2400B8E91B /* Exceptions for "ShelfLifeWidget" folder in "ShelfLifeWidgetExtension" target */,
-			);
-			path = ShelfLifeWidget;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
@@ -127,6 +113,17 @@
 				27A527B2D8DE41AA1048E3A9 /* PrivacyInfo.xcprivacy */,
 			);
 			name = sbuxsupportapp;
+			sourceTree = "<group>";
+		};
+		F4308F812E559D2100B8E91B /* ShelfLifeWidget */ = {
+			isa = PBXGroup;
+			children = (
+				F4C80A122EDE100000000001 /* Assets.xcassets */,
+				F4C80A112EDE100000000001 /* ShelfLifeWidgetBundle.swift */,
+				F4C80A102EDE100000000001 /* ShelfLifeWidget.swift */,
+				F4C80A132EDE100000000001 /* Info.plist */,
+			);
+			path = ShelfLifeWidget;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -240,9 +237,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				F4308F812E559D2100B8E91B /* ShelfLifeWidget */,
-			);
 			name = ShelfLifeWidgetExtension;
 			productName = ShelfLifeWidgetExtension;
 			productReference = F4308F7C2E559D2100B8E91B /* ShelfLifeWidgetExtension.appex */;
@@ -301,6 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4C80A1C2EDE100000000001 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +431,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4C80A1B2EDE100000000001 /* ShelfLifeWidgetBundle.swift in Sources */,
+				F4C80A1A2EDE100000000001 /* ShelfLifeWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,7 +469,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -507,7 +504,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -647,6 +644,7 @@
 		F4308F8E2E559D2400B8E91B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -675,7 +673,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
@@ -693,6 +691,7 @@
 		F4308F8F2E559D2400B8E91B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -722,7 +721,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.brandenmin.sbuxsupportapp.ShelfLifeWidget;
