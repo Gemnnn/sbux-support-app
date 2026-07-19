@@ -30,11 +30,12 @@ namespace server.Services
                 throw new KeyNotFoundException($"Product '{name}' not found.");
             }
 
+            var utcNow = DateTime.UtcNow;
             DateTime adjustedExpirationDate;
             try
             {
                 adjustedExpirationDate = CalculateExpirationDate(
-                    DateTime.UtcNow,
+                    utcNow,
                     product.ShelfLifeDays,
                     timeZone);
             }
@@ -43,17 +44,31 @@ namespace server.Services
                 throw new ArgumentException($"Invalid time zone: {timeZone}");
             }
 
+            var shelfLifeOptions = await _productRepository.GetShelfLifeOptionsAsync(product.ProductId);
+            var optionResponses = shelfLifeOptions
+                .Select(option =>
+                {
+                    var optionExpirationDate = CalculateExpirationDate(
+                        utcNow,
+                        option.ShelfLifeDays,
+                        timeZone);
+
+                    return new
+                    {
+                        option.PreparationType,
+                        ProductName = product.ProductName,
+                        option.ShelfLifeDays,
+                        ExpirationDate = FormatExpirationDate(optionExpirationDate)
+                    };
+                })
+                .ToList();
+
             var response = new
             {
                 ProductName = product.ProductName,
                 ShelfLifeDays = product.ShelfLifeDays,
-                ExpirationDate = new
-                {
-                    Month = adjustedExpirationDate.ToString("MM"),
-                    Date = adjustedExpirationDate.ToString("dd"),
-                    DayOfWeek = adjustedExpirationDate.ToString("dddd"),
-                    Time = adjustedExpirationDate.ToString("hh:mm tt")
-                }
+                ExpirationDate = FormatExpirationDate(adjustedExpirationDate),
+                ShelfLifeOptions = optionResponses
             };
 
             try
@@ -66,6 +81,17 @@ namespace server.Services
             }
 
             return response;
+        }
+
+        private static object FormatExpirationDate(DateTime expirationDate)
+        {
+            return new
+            {
+                Month = expirationDate.ToString("MM"),
+                Date = expirationDate.ToString("dd"),
+                DayOfWeek = expirationDate.ToString("dddd"),
+                Time = expirationDate.ToString("hh:mm tt")
+            };
         }
 
         private static DateTime CalculateExpirationDate(
