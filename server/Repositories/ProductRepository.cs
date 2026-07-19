@@ -22,6 +22,16 @@ namespace server.Repositories
                 .FirstOrDefaultAsync(p => p.ProductName.ToLower() == name.ToLower());
         }
 
+        public async Task<IReadOnlyList<ProductShelfLifeOption>> GetShelfLifeOptionsAsync(int productId)
+        {
+            return await _context.ProductShelfLifeOptions
+                .Where(option => option.ProductId == productId)
+                .OrderBy(option => option.SortOrder)
+                .ThenBy(option => option.ProductShelfLifeOptionId)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Product>> SearchProductsAsync(string partialName)
         {
             return await _context.Products

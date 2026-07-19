@@ -38,6 +38,14 @@ namespace server.Controllers
                 var response = await _productService.GetProductShelfLifeAsync(name, timeZone);
                 return Ok(response);
             }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new
+                {
+                    Code = "PRODUCT_NOT_FOUND",
+                    Message = "This product is no longer available. Please search again."
+                });
+            }
             catch (TimeZoneNotFoundException)
             {
                 return BadRequest(new { Error = $"Invalid time zone: {timeZone}" });

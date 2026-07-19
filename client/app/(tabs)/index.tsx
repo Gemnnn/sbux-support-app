@@ -1,4 +1,5 @@
 import {
+  Alert,
   StyleSheet,
   View,
   TextInput,
@@ -11,11 +12,15 @@ import {
   Animated,
   TouchableWithoutFeedback,
   Dimensions,
-  PixelRatio
+  PixelRatio,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "expo-router";
-import { Product, fetchProductShelfLife } from "../../services/productService";
+import {
+  Product,
+  ProductNotFoundError,
+  fetchProductShelfLife,
+} from "../../services/productService";
 import Constants from "expo-constants";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import AdBanner from "../../components/AdBanner";
@@ -80,6 +85,21 @@ export default function HomeScreen() {
   const autocompleteCache = useRef<Record<string, Product[]>>({});
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
+  const removeRecentSearch = async (term: string) => {
+    const normalizedTerm = term.trim().toLocaleLowerCase();
+    const updatedSearches = recentSearches.filter(
+      item => item.trim().toLocaleLowerCase() !== normalizedTerm
+    );
+
+    setRecentSearches(updatedSearches);
+
+    try {
+      await AsyncStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
+    } catch (error) {
+      console.error("Failed to remove recent search:", error);
+    }
+  };
+
   const handleSearch = async (productName?: string) => {
     try {
       const nameToSearch = productName || searchQuery;
@@ -90,11 +110,18 @@ export default function HomeScreen() {
 
       const product = await fetchProductShelfLife(nameToSearch);
       router.push({
-        pathname: "/SearchResult",
+        pathname: "/(tabs)/SearchResult",
         params: { data: JSON.stringify(product) },
       });
     } catch (error: any) {
       console.error("Search Error:", error.message || error);
+
+      if (error instanceof ProductNotFoundError || error?.code === "PRODUCT_NOT_FOUND") {
+        await removeRecentSearch(productName || searchQuery);
+        Alert.alert("Product unavailable", error.message);
+        return;
+      }
+
       alert(error.message || "Failed to fetch product data. Please try again.");
     }
   };

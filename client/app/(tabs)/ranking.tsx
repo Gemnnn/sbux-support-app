@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Platform,
   SafeAreaView,
@@ -14,7 +15,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import AdBanner from '../../components/AdBanner';
-import { fetchProductShelfLife } from '../../services/productService';
+import { ProductNotFoundError, fetchProductShelfLife } from '../../services/productService';
 
 type RankingItem = {
   rank: number;
@@ -133,11 +134,17 @@ export default function RankingScreen() {
     try {
       const product = await fetchProductShelfLife(productName);
       router.push({
-        pathname: '/SearchResult',
+        pathname: '/(tabs)/SearchResult',
         params: { data: JSON.stringify(product) },
       });
     } catch (error: any) {
       console.error('Ranking Search Error:', error?.message || error);
+
+      if (error instanceof ProductNotFoundError || error?.code === 'PRODUCT_NOT_FOUND') {
+        Alert.alert('Product unavailable', error.message);
+        return;
+      }
+
       setErrorMessage('Unable to open this product right now.');
     } finally {
       setSelectedProduct(null);
