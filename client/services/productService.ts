@@ -2,18 +2,36 @@ import Constants from 'expo-constants';
 
 const { BASE_URL } = Constants.expoConfig?.extra || {};
 
+export interface ExpirationDate {
+  month: string;
+  date: string;
+  dayOfWeek: string;
+  time: string;
+}
+
+export interface ShelfLifeOption {
+  preparationType: string;
+  productName: string;
+  shelfLifeDays: number;
+  expirationDate: ExpirationDate;
+}
 
 export interface Product {
-    productName: string;
-    shelfLifeDays: number;
-    expirationDate: {
-      month: string;
-      date: string;
-      dayOfWeek: string;
-      time: string;
-    };
+  productName: string;
+  shelfLifeDays: number;
+  expirationDate: ExpirationDate;
+  shelfLifeOptions?: ShelfLifeOption[];
+}
+
+export class ProductNotFoundError extends Error {
+  readonly code = 'PRODUCT_NOT_FOUND';
+  readonly status = 404;
+
+  constructor(message = 'This product is no longer available. Please search again.') {
+    super(message);
+    this.name = 'ProductNotFoundError';
   }
-  
+}
 
 /**
  * Fetch product shelf life by product name.
@@ -38,6 +56,11 @@ export const fetchProductShelfLife = async (productName: string): Promise<Produc
   try {
     const response = await fetch(url);
     if (!response.ok) {
+      const errorPayload = await response.json().catch(() => null);
+      if (response.status === 404 && errorPayload?.code === 'PRODUCT_NOT_FOUND') {
+        throw new ProductNotFoundError(errorPayload.message);
+      }
+
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     return await response.json();
@@ -46,4 +69,3 @@ export const fetchProductShelfLife = async (productName: string): Promise<Produc
     throw error;
   }
 };
-
