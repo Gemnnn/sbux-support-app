@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import Constants from 'expo-constants';
@@ -83,18 +84,20 @@ const fetchWeeklyRanking = async (): Promise<RankingItem[]> => {
     throw new Error('BASE_URL is not configured.');
   }
 
-  const response = await fetch(`${BASE_URL}/api/SearchRanking/weekly?take=5`);
+  const response = await fetch(`${BASE_URL}/api/SearchRanking/weekly?take=10`);
 
   if (!response.ok) {
     throw new Error(`Ranking is temporarily unavailable. (${response.status})`);
   }
 
   const data = await response.json();
-  return Array.isArray(data) ? data.slice(0, 5) : [];
+  return Array.isArray(data) ? data.slice(0, 10) : [];
 };
 
 export default function RankingScreen() {
   const router = useRouter();
+  const { width: windowWidth } = useWindowDimensions();
+  const compactRowLayout = windowWidth < 375;
   const [ranking, setRanking] = useState<RankingItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -189,26 +192,43 @@ export default function RankingScreen() {
         data={ranking}
         keyExtractor={(item) => `${item.rank}-${item.productName}`}
         contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={ranking.length > 5}
         renderItem={({ item }) => {
           const isOpening = selectedProduct === item.productName;
 
           return (
             <TouchableOpacity
-              style={styles.rankingRow}
+              style={[styles.rankingRow, compactRowLayout && styles.rankingRowCompact]}
               onPress={() => handleRankingPress(item.productName)}
               activeOpacity={0.8}
               disabled={Boolean(selectedProduct)}
             >
-              <View style={styles.trendIndicator}>{renderTrendIndicator(item.trend)}</View>
-              <View style={[styles.rankBadge, getRankBadgeStyle(item.rank)]}>
-                <Text style={[styles.rankText, getRankTextStyle(item.rank)]}>{item.rank}</Text>
+              <View style={[styles.trendIndicator, compactRowLayout && styles.trendIndicatorCompact]}>
+                {renderTrendIndicator(item.trend)}
               </View>
-              <View style={styles.productInfo}>
-                <Text style={styles.productName} numberOfLines={2}>
+              <View
+                style={[
+                  styles.rankBadge,
+                  getRankBadgeStyle(item.rank),
+                  compactRowLayout && styles.rankBadgeCompact,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.rankText,
+                    getRankTextStyle(item.rank),
+                    compactRowLayout && styles.rankTextCompact,
+                  ]}
+                >
+                  {item.rank}
+                </Text>
+              </View>
+              <View style={[styles.productInfo, compactRowLayout && styles.productInfoCompact]}>
+                <Text style={[styles.productName, compactRowLayout && styles.productNameCompact]}>
                   {item.productName}
                 </Text>
               </View>
-              <View style={styles.countColumn}>
+              <View style={[styles.countColumn, compactRowLayout && styles.countColumnCompact]}>
                 <Text style={styles.countText} numberOfLines={1}>
                   {item.count.toLocaleString()}
                 </Text>
@@ -216,7 +236,7 @@ export default function RankingScreen() {
                   searches
                 </Text>
               </View>
-              <View style={styles.actionIndicator}>
+              <View style={[styles.actionIndicator, compactRowLayout && styles.actionIndicatorCompact]}>
                 {isOpening ? (
                   <ActivityIndicator color="#00704A" size="small" />
                 ) : (
@@ -239,7 +259,7 @@ export default function RankingScreen() {
           <Text style={styles.subtitle}>Top searched products from the last 7 days</Text>
         </View>
 
-        <View style={styles.card}>{renderContent()}</View>
+        <View style={[styles.card, compactRowLayout && styles.cardCompact]}>{renderContent()}</View>
 
         <View style={styles.adContainer}>
           <AdBanner />
@@ -287,8 +307,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     elevation: 4,
   },
+  cardCompact: {
+    paddingHorizontal: 8,
+  },
   listContent: {
     paddingVertical: 2,
+    paddingBottom: 4,
   },
   rankingRow: {
     minHeight: 72,
@@ -302,11 +326,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 10,
   },
+  rankingRowCompact: {
+    paddingHorizontal: 8,
+  },
   trendIndicator: {
     width: 34,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 6,
+  },
+  trendIndicatorCompact: {
+    width: 28,
+    marginRight: 2,
   },
   trendSymbol: {
     fontSize: 16,
@@ -346,6 +377,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 12,
   },
+  rankBadgeCompact: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    marginRight: 8,
+  },
   rankBadgeGold: {
     backgroundColor: '#D9A441',
   },
@@ -362,6 +399,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
   },
+  rankTextCompact: {
+    fontSize: 15,
+  },
   rankTextDark: {
     color: '#1E3932',
   },
@@ -373,11 +413,20 @@ const styles = StyleSheet.create({
     minWidth: 0,
     marginRight: 8,
   },
+  productInfoCompact: {
+    marginRight: 5,
+  },
   productName: {
     color: '#1E3932',
     fontSize: 17,
     fontWeight: '700',
+    lineHeight: 22,
     flexShrink: 1,
+    flexWrap: 'wrap',
+  },
+  productNameCompact: {
+    fontSize: 15,
+    lineHeight: 19,
   },
   countText: {
     color: '#1E3932',
@@ -396,11 +445,18 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
+  countColumnCompact: {
+    width: 58,
+  },
   actionIndicator: {
     width: 20,
     alignItems: 'flex-end',
     justifyContent: 'center',
     marginLeft: 4,
+  },
+  actionIndicatorCompact: {
+    width: 18,
+    marginLeft: 2,
   },
   stateContainer: {
     flex: 1,
